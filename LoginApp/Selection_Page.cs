@@ -16,5 +16,25 @@ namespace LoginApp
         {
             InitializeComponent();
         }
+
+        private void fingerprintCapture_Button_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fingerprintEncrypt_Button_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void faceCapture_Button_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void faceEncrypt_Button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
