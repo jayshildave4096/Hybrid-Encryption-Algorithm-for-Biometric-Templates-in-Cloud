@@ -58,6 +58,7 @@ namespace LoginApp
             this.Register_Button.TabIndex = 1;
             this.Register_Button.Text = "Register";
             this.Register_Button.UseVisualStyleBackColor = true;
+            this.Register_Button.Click += new System.EventHandler(this.Register_Button_Click);
             // 
             // Username
             // 

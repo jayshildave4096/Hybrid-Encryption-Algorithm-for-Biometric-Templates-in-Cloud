@@ -16,6 +16,7 @@ namespace LoginApp
         SqlConnection conn;
         SqlCommand query;
         SqlDataReader dataReader;
+        SqlDataAdapter dataAdapter=new SqlDataAdapter();
 
         public LoginApp()
         {
@@ -23,7 +24,11 @@ namespace LoginApp
         }
 
         private String username, password,sqlquery,response;
+
+       
+
         private bool AWS_Button_Checked, GCP_Button_Checked, Azure_Button_Checked;
+        // LOGIN BUTTON FUNCTION
         private void Login_Button_Click(object sender, EventArgs e)
         {
             username = Username_TxtBox.Text;
@@ -68,8 +73,45 @@ namespace LoginApp
             {
                 MessageBox.Show("Please select a cloud provider");
             }
-            
+            conn.Close();
         }
+        private void Register_Button_Click(object sender, EventArgs e)
+        {
+            username = Username_TxtBox.Text;
+            password = Password_TxtBox.Text;
+            AWS_Button_Checked = AWS_Button.Checked;
+            GCP_Button_Checked = GCP_Button.Checked;
+            Azure_Button_Checked = Azure_Button.Checked;
+            if (AWS_Button_Checked)
+            {
+                try
+                {
+                    conn = new SqlConnection();
+                    conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
+                    conn.Open();
+                    if (username == "" || password == "")
+                    {
+                        MessageBox.Show("Invalid Entries please check");
+                    }
+                    else
+                    {
+                        sqlquery = $"insert into Userdata values('{username}','{password}');";
+                        query = new SqlCommand(sqlquery, conn);
+                        dataAdapter.InsertCommand = new SqlCommand(sqlquery, conn);
+                        dataAdapter.InsertCommand.ExecuteNonQuery();
+                        query.Dispose();
+                        conn.Close();
+                        MessageBox.Show("Registered Succefully");
+
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
 
 
         
