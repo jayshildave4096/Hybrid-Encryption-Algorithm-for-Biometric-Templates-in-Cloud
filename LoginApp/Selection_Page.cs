@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace LoginApp
 {
-    public partial class Fingerprint_Page : Form
+    public partial class Selection_Page : Form
     {
-        public Fingerprint_Page()
+        public Selection_Page()
         {
             InitializeComponent();
         }

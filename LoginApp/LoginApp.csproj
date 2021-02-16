@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fingerprint_Page.cs">
+    <Compile Include="Selection_Page.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Fingerprint_Page.Designer.cs">
-      <DependentUpon>Fingerprint_Page.cs</DependentUpon>
+    <Compile Include="Selection_Page.Designer.cs">
+      <DependentUpon>Selection_Page.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginApp.cs">
       <SubType>Form</SubType>
@@ -72,6 +72,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Selection_Page.resx">
+      <DependentUpon>Selection_Page.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

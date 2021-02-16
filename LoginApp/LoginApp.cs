@@ -54,7 +54,7 @@ namespace LoginApp
                     {
                         //MessageBox.Show("Login Successful");
                         
-                        (new Fingerprint_Page()).Show();
+                        (new Selection_Page()).Show();
                         this.Close();
                     }
                     else
