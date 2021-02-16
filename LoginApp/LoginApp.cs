@@ -28,34 +28,47 @@ namespace LoginApp
         {
             username = Username_TxtBox.Text;
             password = Password_TxtBox.Text;
-
-            try
+            AWS_Button_Checked = AWS_Button.Checked;
+            GCP_Button_Checked = GCP_Button.Checked;
+            Azure_Button_Checked = Azure_Button.Checked;
+            if (AWS_Button_Checked == true)
             {
-                conn = new SqlConnection();
-                conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
-                conn.Open();
-                sqlquery = $"select count(username) from Userdata where username={username} and password={password};";
-                query = new SqlCommand(sqlquery,conn);
-                dataReader = query.ExecuteReader();
-                while (dataReader.Read())
+                try
                 {
-                    response = response + dataReader.GetValue(0);
-                }
-                if (response != "0")
-                {
-                    MessageBox.Show("Login Successful");
-                }
-                else
-                {
-                    MessageBox.Show("User not Found Please Register");
-                }
+                    conn = new SqlConnection();
+                    conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
+                    conn.Open();
+                    sqlquery = $"select count(username) from Userdata where username='{username}' and password='{password}';";
+                    query = new SqlCommand(sqlquery, conn);
+                    dataReader = query.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        response = response + dataReader.GetValue(0);
+                    }
+                    if (response != "0")
+                    {
+                        //MessageBox.Show("Login Successful");
+                        
+                        (new Fingerprint_Page()).Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("User not Found Please Register");
+                    }
 
-                // LOAD Fingerprint
+                    // LOAD Fingerprint
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch(Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Please select a cloud provider");
             }
+            
         }
 
 

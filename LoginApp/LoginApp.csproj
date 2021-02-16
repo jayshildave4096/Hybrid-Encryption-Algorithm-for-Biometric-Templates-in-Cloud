@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fingerprint_Page.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fingerprint_Page.Designer.cs">
+      <DependentUpon>Fingerprint_Page.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginApp.cs">
       <SubType>Form</SubType>
     </Compile>
