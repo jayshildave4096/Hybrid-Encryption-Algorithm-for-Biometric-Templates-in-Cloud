@@ -73,7 +73,7 @@ namespace LoginApp
             {
                 MessageBox.Show("Please select a cloud provider");
             }
-            conn.Close();
+            
         }
         private void Register_Button_Click(object sender, EventArgs e)
         {
