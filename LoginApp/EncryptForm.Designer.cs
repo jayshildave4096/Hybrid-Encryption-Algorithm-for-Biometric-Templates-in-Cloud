@@ -33,7 +33,8 @@ namespace LoginApp
             this.Decrypt_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox = new System.Windows.Forms.TextBox();
+            this.LoadButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Encrypt_Button
@@ -71,20 +72,31 @@ namespace LoginApp
             this.textBox1.Size = new System.Drawing.Size(165, 22);
             this.textBox1.TabIndex = 3;
             // 
-            // textBox2
+            // textBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(45, 165);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(273, 325);
-            this.textBox2.TabIndex = 4;
+            this.textBox.Location = new System.Drawing.Point(45, 165);
+            this.textBox.Multiline = true;
+            this.textBox.Name = "textBox";
+            this.textBox.Size = new System.Drawing.Size(273, 325);
+            this.textBox.TabIndex = 4;
+            // 
+            // LoadButton
+            // 
+            this.LoadButton.Location = new System.Drawing.Point(45, 513);
+            this.LoadButton.Name = "LoadButton";
+            this.LoadButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadButton.TabIndex = 5;
+            this.LoadButton.Text = "Load";
+            this.LoadButton.UseVisualStyleBackColor = true;
+            this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
             // EncryptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 577);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.LoadButton);
+            this.Controls.Add(this.textBox);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Decrypt_Button);
@@ -102,6 +114,7 @@ namespace LoginApp
         private System.Windows.Forms.Button Decrypt_Button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox;
+        private System.Windows.Forms.Button LoadButton;
     }
 }

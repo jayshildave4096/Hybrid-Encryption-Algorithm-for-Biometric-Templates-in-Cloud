@@ -26,7 +26,8 @@ namespace LoginApp
 
         private void fingerprintEncrypt_Button_Click(object sender, EventArgs e)
         {
-
+            (new EncryptForm()).Show();
+            this.Close();
         }
 
         private void faceCapture_Button_Click(object sender, EventArgs e)

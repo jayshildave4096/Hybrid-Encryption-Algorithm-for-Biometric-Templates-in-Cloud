@@ -16,6 +16,7 @@ namespace LoginApp
     public partial class EncryptForm :Form, DPFP.Capture.EventHandler
     {
         private DPFP.Template Template;
+        DPFP.Template template;
         public EncryptForm()
         {
             InitializeComponent();
@@ -26,13 +27,22 @@ namespace LoginApp
             open.Filter = "Fingerprint Template File (*.fpt)|*.fpt";
             if (open.ShowDialog() == DialogResult.OK)
             {
-                using (FileStream fs = File.OpenRead(open.FileName))
+                using (FileStream fs = File.Open(open.FileName, FileMode.Open, FileAccess.ReadWrite))
                 {
-                    DPFP.Template template = new DPFP.Template(fs);
-                    OnTemplate(template);
+                    template = new DPFP.Template(fs);
+                    template.Serialize(fs);
+                    fs.Position = 0;
+                    BinaryReader br = new BinaryReader(fs);
+                    Byte[] bytes = br.ReadBytes(template.Bytes.Length);
+                    textBox.Text = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
+                    Console.WriteLine(template.Bytes.Length);
+                    //OnTemplate(template);
                 }
             }
+            
+
         }
+   
         private void OnTemplate(DPFP.Template template)
         {
 
