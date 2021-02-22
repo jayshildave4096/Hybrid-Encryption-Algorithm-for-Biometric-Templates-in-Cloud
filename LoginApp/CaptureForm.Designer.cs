@@ -33,6 +33,9 @@ namespace LoginApp
             this.StatusText = new System.Windows.Forms.TextBox();
             this.captureButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.FeatureRequiredText = new System.Windows.Forms.Label();
+            this.Back_Button = new System.Windows.Forms.Button();
+            this.Upload_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,25 +43,25 @@ namespace LoginApp
             // 
             this.pictureBox.Location = new System.Drawing.Point(37, 47);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(283, 345);
+            this.pictureBox.Size = new System.Drawing.Size(292, 385);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
             // StatusText
             // 
-            this.StatusText.Location = new System.Drawing.Point(379, 77);
+            this.StatusText.Location = new System.Drawing.Point(349, 77);
             this.StatusText.Multiline = true;
             this.StatusText.Name = "StatusText";
             this.StatusText.ReadOnly = true;
             this.StatusText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.StatusText.Size = new System.Drawing.Size(652, 315);
+            this.StatusText.Size = new System.Drawing.Size(682, 355);
             this.StatusText.TabIndex = 4;
             // 
             // captureButton
             // 
-            this.captureButton.Location = new System.Drawing.Point(379, 38);
+            this.captureButton.Location = new System.Drawing.Point(349, 34);
             this.captureButton.Name = "captureButton";
-            this.captureButton.Size = new System.Drawing.Size(75, 23);
+            this.captureButton.Size = new System.Drawing.Size(80, 36);
             this.captureButton.TabIndex = 5;
             this.captureButton.Text = "Capture";
             this.captureButton.UseVisualStyleBackColor = true;
@@ -66,19 +69,52 @@ namespace LoginApp
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(505, 38);
+            this.saveButton.Location = new System.Drawing.Point(449, 34);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.Size = new System.Drawing.Size(81, 36);
             this.saveButton.TabIndex = 6;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // FeatureRequiredText
+            // 
+            this.FeatureRequiredText.AutoSize = true;
+            this.FeatureRequiredText.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.FeatureRequiredText.Location = new System.Drawing.Point(855, 57);
+            this.FeatureRequiredText.Name = "FeatureRequiredText";
+            this.FeatureRequiredText.Size = new System.Drawing.Size(133, 17);
+            this.FeatureRequiredText.TabIndex = 7;
+            this.FeatureRequiredText.Text = "Features required : ";
+            // 
+            // Back_Button
+            // 
+            this.Back_Button.Location = new System.Drawing.Point(965, 488);
+            this.Back_Button.Name = "Back_Button";
+            this.Back_Button.Size = new System.Drawing.Size(99, 41);
+            this.Back_Button.TabIndex = 8;
+            this.Back_Button.Text = "Back";
+            this.Back_Button.UseVisualStyleBackColor = true;
+            this.Back_Button.Click += new System.EventHandler(this.Back_Button_Click);
+            // 
+            // Upload_Button
+            // 
+            this.Upload_Button.Location = new System.Drawing.Point(712, 488);
+            this.Upload_Button.Name = "Upload_Button";
+            this.Upload_Button.Size = new System.Drawing.Size(236, 41);
+            this.Upload_Button.TabIndex = 9;
+            this.Upload_Button.Text = "Upload Existing Fingerprint";
+            this.Upload_Button.UseVisualStyleBackColor = true;
+            this.Upload_Button.Click += new System.EventHandler(this.Upload_Button_Click);
             // 
             // CaptureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 551);
+            this.Controls.Add(this.Upload_Button);
+            this.Controls.Add(this.Back_Button);
+            this.Controls.Add(this.FeatureRequiredText);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.captureButton);
             this.Controls.Add(this.StatusText);
@@ -97,5 +133,8 @@ namespace LoginApp
         private System.Windows.Forms.TextBox StatusText;
         private System.Windows.Forms.Button captureButton;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Label FeatureRequiredText;
+        private System.Windows.Forms.Button Back_Button;
+        private System.Windows.Forms.Button Upload_Button;
     }
 }
