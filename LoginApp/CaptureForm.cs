@@ -21,12 +21,15 @@ namespace LoginApp
         {
             InitializeComponent();
         }
-
+        delegate void SetTextCallback(string text);
+        delegate void UpdateStatusCallback(string text);
+        delegate void UpdateSaveButtonCallback(bool t);
         public Capture Capturer { get; private set; } = new Capture();
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             Enroller = new DPFP.Processing.Enrollment();
+            saveButton.Enabled = false;
             StatusText.AppendText("The fingerprint reader was disconnected." + "\r\n");
             FeatureRequiredText.Text = "Captures Required:" + Enroller.FeaturesNeeded;
         }
@@ -66,6 +69,7 @@ namespace LoginApp
                             else {OnTemplate(Enroller.Template); }// report success and stop capturing
                             
                             SetText("Capture complete...Template generated");
+                            UpdateSaveButton(true);
                             if (null != Capturer)
                             {
                                 try
@@ -112,8 +116,7 @@ namespace LoginApp
             // Draw fingerprint sample image.
             DrawPicture(ConvertSampleToBitmap(Sample));
         }
-        delegate void SetTextCallback(string text);
-        delegate void UpdateStatusCallback(string text);
+      
         #region EVENT HANDLERS
 
         public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
@@ -145,10 +148,10 @@ namespace LoginApp
         }
         public void OnSampleQuality(object Capture, string ReaderSerialNumber, DPFP.Capture.CaptureFeedback CaptureFeedback)
         {
-            /*if (CaptureFeedback == DPFP.Capture.CaptureFeedback.Good)
-                StatusText.AppendText("The quality of the fingerprint sample is good." + "\r\n");
+            if (CaptureFeedback == DPFP.Capture.CaptureFeedback.Good)
+                SetText("The quality of the fingerprint sample is good." + "\r\n");
             else
-                StatusText.AppendText("The quality of the fingerprint sample is poor." + "\r\n");*/
+                SetText("The quality of the fingerprint sample is poor." + "\r\n");
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -161,6 +164,9 @@ namespace LoginApp
                     Template.Serialize(fs);
                 }
             }
+            pictureBox.Image = null;
+            SetText("TEMPLATE SAVED.\n Click BACK and got to Encrypt/Decrypt");
+
         }
         private void Back_Button_Click(object sender, EventArgs e)
         {
@@ -230,6 +236,19 @@ namespace LoginApp
             else
             {
                 this.FeatureRequiredText.Text = text;
+            }
+        }
+
+        private void UpdateSaveButton(bool t)
+        {
+            if (this.saveButton.InvokeRequired)
+            {
+                UpdateSaveButtonCallback d = new UpdateSaveButtonCallback(UpdateSaveButton);
+                this.Invoke(d, new object[] { t });
+            }
+            else
+            {
+                this.saveButton.Enabled = t;
             }
         }
 
