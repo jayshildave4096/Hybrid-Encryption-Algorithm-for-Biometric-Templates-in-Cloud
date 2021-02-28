@@ -12,7 +12,7 @@ namespace LoginApp
     {
         public string run_rc4(string op,string password,string key)
         {
-            string fileName = @"C:\Users\davej\Desktop\rc4.py";
+            string fileName = @"D:\work\Code\MajorProject\rc4.py";
 
             Process p = new Process();
             p.StartInfo = new ProcessStartInfo(@"D:\ProgramData\python.exe", string.Format("{0} {1} {2} {3}", fileName, op, password, key))
