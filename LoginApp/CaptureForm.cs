@@ -173,19 +173,7 @@ namespace LoginApp
             (new Selection_Page()).Show();
             this.Close();
         }
-        private void Upload_Button_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Fingerprint Template File (*.fpt)|*.fpt";
-            if (open.ShowDialog() == DialogResult.OK)
-            {
-                using (FileStream fs = File.OpenRead(open.FileName))
-                {
-                    DPFP.Template template = new DPFP.Template(fs);
-                    OnTemplate(template);
-                }
-            }
-        }
+      
         #endregion
 
         protected Bitmap ConvertSampleToBitmap(DPFP.Sample Sample)
@@ -198,17 +186,6 @@ namespace LoginApp
 
         private void DrawPicture(Bitmap bitmap)
         {
-            /*Bitmap bImage = bitmap;  // Your Bitmap Image
-            System.IO.MemoryStream ms = new MemoryStream();
-            bImage.Save(ms, ImageFormat.Jpeg);
-            byte[] byteImage = ms.ToArray();
-            var SigBase64 = Convert.ToBase64String(byteImage);
-            SetText(SigBase64);*/
-           
-            
-            //BinaryReader br = new BinaryReader(Template);
-            //Byte[] bytes = br.ReadBytes((Int32)Enroller.Template.Bytes.Length);
-
             pictureBox.Image = new Bitmap(bitmap, pictureBox.Size);   // fit the image into the picture box
             //bitmap.Save(@"C:\Users\davej\Desktop\temp1.bmp");
         }

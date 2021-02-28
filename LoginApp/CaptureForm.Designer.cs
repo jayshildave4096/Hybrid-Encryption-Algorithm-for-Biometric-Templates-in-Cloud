@@ -35,7 +35,6 @@ namespace LoginApp
             this.saveButton = new System.Windows.Forms.Button();
             this.FeatureRequiredText = new System.Windows.Forms.Label();
             this.Back_Button = new System.Windows.Forms.Button();
-            this.Upload_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,22 +97,11 @@ namespace LoginApp
             this.Back_Button.UseVisualStyleBackColor = true;
             this.Back_Button.Click += new System.EventHandler(this.Back_Button_Click);
             // 
-            // Upload_Button
-            // 
-            this.Upload_Button.Location = new System.Drawing.Point(712, 488);
-            this.Upload_Button.Name = "Upload_Button";
-            this.Upload_Button.Size = new System.Drawing.Size(236, 41);
-            this.Upload_Button.TabIndex = 9;
-            this.Upload_Button.Text = "Upload Existing Fingerprint";
-            this.Upload_Button.UseVisualStyleBackColor = true;
-            this.Upload_Button.Click += new System.EventHandler(this.Upload_Button_Click);
-            // 
             // CaptureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 551);
-            this.Controls.Add(this.Upload_Button);
             this.Controls.Add(this.Back_Button);
             this.Controls.Add(this.FeatureRequiredText);
             this.Controls.Add(this.saveButton);
@@ -136,6 +124,5 @@ namespace LoginApp
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label FeatureRequiredText;
         private System.Windows.Forms.Button Back_Button;
-        private System.Windows.Forms.Button Upload_Button;
     }
 }
