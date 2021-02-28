@@ -43,14 +43,19 @@ namespace LoginApp
                     conn = new SqlConnection();
                     conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
                     conn.Open();
-                    sqlquery = $"select count(username) from Userdata where username='{username}' and password='{password}';";
+                    PythonScript obj = new PythonScript();
+                    sqlquery = $"select password from Userdata where username='{username}';";
                     query = new SqlCommand(sqlquery, conn);
                     dataReader = query.ExecuteReader();
                     while (dataReader.Read())
                     {
                         response = response + dataReader.GetValue(0);
                     }
-                    if (response != "0")
+                    Console.WriteLine(response);
+                    string decrypted_password = obj.run_rc4("decrypt", response, "majorproject");
+                    decrypted_password = decrypted_password.Replace("\n", "").Replace("\r", "");
+                   
+                    if (String.Compare(decrypted_password,password) == 0)
                     {
                         //MessageBox.Show("Login Successful");
                         
@@ -95,7 +100,9 @@ namespace LoginApp
                     }
                     else
                     {
-                        sqlquery = $"insert into Userdata values('{username}','{password}');";
+                        PythonScript obj = new PythonScript();
+                        string encrypted_password = obj.run_rc4("encrypt",password,"majorproject");
+                        sqlquery = $"insert into Userdata values('{username}','{encrypted_password}');";
                         query = new SqlCommand(sqlquery, conn);
                         dataAdapter.InsertCommand = new SqlCommand(sqlquery, conn);
                         dataAdapter.InsertCommand.ExecuteNonQuery();

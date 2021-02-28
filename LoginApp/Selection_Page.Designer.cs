@@ -106,6 +106,7 @@ namespace LoginApp
             this.VerifyButton.TabIndex = 7;
             this.VerifyButton.Text = "Verify";
             this.VerifyButton.UseVisualStyleBackColor = true;
+            this.VerifyButton.Click += new System.EventHandler(this.VerifyButton_Click);
             // 
             // Selection_Page
             // 

@@ -86,6 +86,9 @@
     <Compile Include="CaptureForm.Designer.cs">
       <DependentUpon>CaptureForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PythonScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="EncryptForm.cs">
       <SubType>Form</SubType>
     </Compile>

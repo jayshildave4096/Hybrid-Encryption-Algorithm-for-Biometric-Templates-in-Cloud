@@ -39,5 +39,11 @@ namespace LoginApp
         {
 
         }
+
+        public void VerifyButton_Click(object sender, EventArgs e)
+        {
+            //PythonScript obj = new PythonScript();
+            //obj.run_cmd();
+        }
     }
 }
