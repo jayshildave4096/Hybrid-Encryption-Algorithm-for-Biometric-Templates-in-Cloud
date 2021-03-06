@@ -1,6 +1,7 @@
 import itertools
 import base64
 import math
+#matrix used to permutate the plaintext
 P=[69,45,30,128,38,95,23,73,71,53,82,31,99,111,106,79,
    97,101,107,113,4,25,49,94,44,119,75,76,83,92,17,67,
    88,51,104,81,100,58,102,77,87,103,121,22,123,124,32,59,
@@ -9,7 +10,7 @@ P=[69,45,30,128,38,95,23,73,71,53,82,31,99,111,106,79,
    14,110,48,93,37,116,70,12,98,28,115,63,91,125,33,6,
    21,114,41,27,90,15,60,50,85,78,126,34,35,5,40,42,
    43,72,7,13,89,1,36,9,19,112,52,109,16,120,86,46]
-
+#inverse matrix for decryption
 PI_1=[118, 62, 73, 21, 110, 96, 115, 53, 120, 66, 59, 88, 116, 81, 102, 125,
       31, 78, 121, 56, 97, 44, 7, 69, 22, 75, 100, 90, 54, 3, 12, 47,
       95, 108, 109, 119, 85, 5, 74, 111, 99, 112, 113, 25, 2, 128, 71, 83, 
@@ -18,6 +19,17 @@ PI_1=[118, 62, 73, 21, 110, 96, 115, 53, 120, 66, 59, 88, 116, 81, 102, 125,
       36, 11, 29, 63, 105, 127, 41, 33, 117, 101, 93, 30, 84, 24, 6, 49,
       17, 89, 13, 37, 18, 39, 42, 35, 55, 15, 19, 65, 124, 82, 14, 122,
       20, 98, 91, 86, 76, 77, 26, 126, 43, 52, 45, 46, 94, 107, 61, 4]
+
+EX=[12,20,29,26,31,8,28,21,
+    2,32,6,19,11,5,14,11,
+    27,15,20,25,23,23,22,3,
+    4,14,32,17,25,28,30,4,
+    7,1,18,30,8,31,10,27,
+    16,2,24,13,19,7,26,12,
+    17,18,13,22,3,10,21,16,
+    5,24,1,9,15,29,9,6]
+
+
 
 data="02347618"
 secret_key="yjayshil"
@@ -47,8 +59,11 @@ def nsplit(s, n):#Split a list into sublists of size "n"
 def permute(block, table):#Permut the given block using the given table (so generic method)
     return [block[x-1] for x in table]
 
+def xor(l1, l2):#Apply a xor and return the resulting list
+        return [x^y for x,y in zip(l1,l2)]
+
 def generate_subkey(plaintext,secretkey):   # Generate subkey for each round
-    m=0
+    m=0 # M value which is added to the plaintext
     # RC4_key="w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="
     for i in range(len(plaintext)): # calculation M
          m=m+(ord(plaintext[i])*(i+1))
@@ -56,17 +71,37 @@ def generate_subkey(plaintext,secretkey):   # Generate subkey for each round
     for i in range(len(plaintext)): #adding M to each character
         t= (ord(plaintext[i])+m)%256
         plaintext = plaintext[:i] + chr(t) + plaintext[i + 1:]
-
     final_subkey_string=plaintext+nsplit(secretkey,8)[0]
     temp_arr=string_to_bit_array(final_subkey_string)
-    print(temp_arr)
     subkey_bitarray=permute(temp_arr,P)
-    r=permute(subkey_bitarray,PI_1)
-    
     final_subkey_string=bit_array_to_string(subkey_bitarray)
-    print(final_subkey_string,bit_array_to_string(r))
-    # final_subkey_string=final_subkey_string.encode('ascii', 'ignore').decode('ascii')
-    return len(final_subkey_string)
+    return final_subkey_string
+
+def round(plaintext,subkey):
+    plaintext_L=plaintext[:4]
+    plaintext_R=plaintext[4:]
+    subkey_L=subkey[:8]
+    subkey_R=subkey[8:]
+    round_key=""
+    if string_to_bit_array(subkey)[0] == 0:
+        round_key=subkey_R
+    else:
+        round_key=subkey_L
+    bit_array=string_to_bit_array(plaintext_R)
+    round_key_bit_array=string_to_bit_array(round_key)
+    bit_array=permute(bit_array,EX)#expanding plaintext R form 32 to 64 bits
+    bit_array=xor(bit_array,round_key_bit_array) #performing XOR operation
+    shifted_arr=left_shift(bit_array) #shifting bits to left
+    encrypted_plaintext_R=bit_array_to_string(shifted_arr[0:31])
+    print(plaintext_R,encrypted_plaintext_R)
+    
+    
+def left_shift(arr):
+    return arr[1: ]+arr[:1]
+
+
+    
+
 
 
 class algorithm:
@@ -79,11 +114,6 @@ class algorithm:
 # ------------------------------------------------------------ TESTING --------------------------------------------------------------------
 
 
-    print(bit_array_to_string([0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0]))
-    print(generate_subkey(data,"w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="))
-# k=[]
-# for i in range(1,129):
-#     l=P.index(i)
-#     k.append(l+1)
-      
-# print(k)
+
+round(data,generate_subkey(data,"w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="))
+
