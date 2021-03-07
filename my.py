@@ -20,18 +20,8 @@ PI_1=[118, 62, 73, 21, 110, 96, 115, 53, 120, 66, 59, 88, 116, 81, 102, 125,
       17, 89, 13, 37, 18, 39, 42, 35, 55, 15, 19, 65, 124, 82, 14, 122,
       20, 98, 91, 86, 76, 77, 26, 126, 43, 52, 45, 46, 94, 107, 61, 4]
 
-EX=[12,20,29,26,31,8,28,21,
-    2,32,6,19,11,5,14,11,
-    27,15,20,25,23,23,22,3,
-    4,14,32,17,25,28,30,4,
-    7,1,18,30,8,31,10,27,
-    16,2,24,13,19,7,26,12,
-    17,18,13,22,3,10,21,16,
-    5,24,1,9,15,29,9,6]
 
-
-
-data="02347618"
+data="023471"
 secret_key="yjayshil"
 pswd="ganesha"
 def binvalue(val, bitsize): #Return the binary value as a string of the given size 
@@ -60,7 +50,23 @@ def permute(block, table):#Permut the given block using the given table (so gene
     return [block[x-1] for x in table]
 
 def xor(l1, l2):#Apply a xor and return the resulting list
-        return [x^y for x,y in zip(l1,l2)]
+    return [x^y for x,y in zip(l1,l2)]
+
+def addPadding(text):#Add padding to the datas using PKCS5 spec.
+    pad_len = 8 - (len(text) % 8)
+    text += pad_len * chr(pad_len)
+    return text
+    
+def removePadding(text):#Remove the padding of the plain text (it assume there is padding)
+    pad_len = ord(text[-1])
+    return text[:-pad_len]
+
+def perform_check(text):
+    if len(text)%8!=0:
+        text=addPadding(text)
+    return text
+
+   
 
 def generate_subkey(plaintext,secretkey):   # Generate subkey for each round
     m=0 # M value which is added to the plaintext
@@ -78,22 +84,25 @@ def generate_subkey(plaintext,secretkey):   # Generate subkey for each round
     return final_subkey_string
 
 def round(plaintext,subkey):
-    plaintext_L=plaintext[:4]
-    plaintext_R=plaintext[4:]
     subkey_L=subkey[:8]
     subkey_R=subkey[8:]
     round_key=""
+
+    
     if string_to_bit_array(subkey)[0] == 0:
         round_key=subkey_R
     else:
         round_key=subkey_L
-    bit_array=string_to_bit_array(plaintext_R)
     round_key_bit_array=string_to_bit_array(round_key)
-    bit_array=permute(bit_array,EX)#expanding plaintext R form 32 to 64 bits
+    bit_array=string_to_bit_array(plaintext)
+    
     bit_array=xor(bit_array,round_key_bit_array) #performing XOR operation
+    
+    # bit_array=permute(bit_array,EX)#expanding plaintext R form 32 to 64 bits
+     
     shifted_arr=left_shift(bit_array) #shifting bits to left
-    encrypted_plaintext_R=bit_array_to_string(shifted_arr[0:31])
-    print(plaintext_R,encrypted_plaintext_R)
+    encrypted_plaintext_R=bit_array_to_string(shifted_arr)
+    print(plaintext,len(encrypted_plaintext_R))
     
     
 def left_shift(arr):
@@ -114,6 +123,7 @@ class algorithm:
 # ------------------------------------------------------------ TESTING --------------------------------------------------------------------
 
 
+data=perform_check(data)
 
 round(data,generate_subkey(data,"w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="))
 
