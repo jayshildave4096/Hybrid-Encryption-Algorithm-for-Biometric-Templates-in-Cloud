@@ -20,8 +20,18 @@ PI_1=[118, 62, 73, 21, 110, 96, 115, 53, 120, 66, 59, 88, 116, 81, 102, 125,
       17, 89, 13, 37, 18, 39, 42, 35, 55, 15, 19, 65, 124, 82, 14, 122,
       20, 98, 91, 86, 76, 77, 26, 126, 43, 52, 45, 46, 94, 107, 61, 4]
 
+P1=[15,13,9,31,7,21,27,8,
+    5,4,26,10,14,16,17,23,
+    2,29,32,20,25,1,3,6,
+    19,28,11,18,22,12,30,24]
 
-data="023471"
+compression_table=[1,14,17,11,24,1,5,3,
+                   2,15,6,21,10,23,19,23,
+                   3,26,8,16,7,27,20,13,
+                   4,41,52,31,37,47,55,30]
+
+
+data="02347681"
 secret_key="yjayshil"
 pswd="ganesha"
 def binvalue(val, bitsize): #Return the binary value as a string of the given size 
@@ -87,22 +97,36 @@ def round(plaintext,subkey):
     subkey_L=subkey[:8]
     subkey_R=subkey[8:]
     round_key=""
-
+    plaintext_L=plaintext[:4]
+    plaintext_R=plaintext[4:]
     
     if string_to_bit_array(subkey)[0] == 0:
         round_key=subkey_R
     else:
         round_key=subkey_L
+    #converting strings to bit arrays
     round_key_bit_array=string_to_bit_array(round_key)
-    bit_array=string_to_bit_array(plaintext)
+    bit_array_L=string_to_bit_array(plaintext_L)
     
-    bit_array=xor(bit_array,round_key_bit_array) #performing XOR operation
+    bit_array_R=string_to_bit_array(plaintext_R)
+    #compresion and XOR operation
+    round_key_bit_array=permute(round_key_bit_array,compression_table)
+   
+    bit_array_R=xor(bit_array_R,round_key_bit_array) #performing XOR operation
     
-    # bit_array=permute(bit_array,EX)#expanding plaintext R form 32 to 64 bits
-     
-    shifted_arr=left_shift(bit_array) #shifting bits to left
-    encrypted_plaintext_R=bit_array_to_string(shifted_arr)
-    print(plaintext,len(encrypted_plaintext_R))
+    bit_array_R=left_shift(bit_array_R) #shifting bits to left
+    
+    bit_array_L=xor(bit_array_L,bit_array_R)
+   
+   
+    bit_array_L=permute(bit_array_L,P1)
+    encrypted_plaintext_R=bit_array_to_string(bit_array_R)
+    encrypted_plaintext_L=bit_array_to_string(bit_array_L)
+    
+    print(plaintext_R,len(encrypted_plaintext_R))
+    print(plaintext_L,len(encrypted_plaintext_L))
+
+    # return encrypted_plaintext_L+encrypted_plaintext_R
     
     
 def left_shift(arr):
@@ -126,4 +150,5 @@ class algorithm:
 data=perform_check(data)
 
 round(data,generate_subkey(data,"w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="))
+
 
