@@ -25,6 +25,11 @@ P1=[15,13,9,31,7,21,27,8,
     2,29,32,20,25,1,3,6,
     19,28,11,18,22,12,30,24]
 
+P1_I=[22, 17, 23, 10, 9, 24, 5, 8,
+      3, 12, 27, 30, 2, 13, 1, 14, 
+      15, 28, 25, 20, 6, 29, 16, 32,
+      21, 11, 7, 26, 18, 31, 4,19]
+
 compression_table=[1,14,17,11,24,1,5,3,
                    2,15,6,21,10,23,19,23,
                    3,26,8,16,7,27,20,13,
@@ -32,8 +37,9 @@ compression_table=[1,14,17,11,24,1,5,3,
 
 
 data="02347681"
-secret_key="yjayshil"
-pswd="ganesha"
+# data="405017038435627636484172752865214277866651775463763522190982397500410205555857421123974212764844"
+# secret_key="yjayshil"
+# pswd="ganesha"
 def binvalue(val, bitsize): #Return the binary value as a string of the given size 
     binval = bin(val)[2:] if isinstance(val, int) else bin(ord(val))[2:]
     if len(binval) > bitsize:
@@ -63,7 +69,7 @@ def xor(l1, l2):#Apply a xor and return the resulting list
     return [x^y for x,y in zip(l1,l2)]
 
 def addPadding(text):#Add padding to the datas using PKCS5 spec.
-    pad_len = 8 - (len(text) % 8)
+    pad_len = 16 - (len(text) % 16)
     text += pad_len * chr(pad_len)
     return text
     
@@ -71,27 +77,32 @@ def removePadding(text):#Remove the padding of the plain text (it assume there i
     pad_len = ord(text[-1])
     return text[:-pad_len]
 
-def perform_check(text):
-    if len(text)%8!=0:
-        text=addPadding(text)
-    return text
+
 
    
 
 def generate_subkey(plaintext,secretkey):   # Generate subkey for each round
     m=0 # M value which is added to the plaintext
     # RC4_key="w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="
+    keys=list()
+    key_arr=string_to_bit_array(secretkey[:16])
     for i in range(len(plaintext)): # calculation M
          m=m+(ord(plaintext[i])*(i+1))
     m=m%len(plaintext)
     for i in range(len(plaintext)): #adding M to each character
         t= (ord(plaintext[i])+m)%256
         plaintext = plaintext[:i] + chr(t) + plaintext[i + 1:]
-    final_subkey_string=plaintext+nsplit(secretkey,8)[0]
-    temp_arr=string_to_bit_array(final_subkey_string)
-    subkey_bitarray=permute(temp_arr,P)
-    final_subkey_string=bit_array_to_string(subkey_bitarray)
-    return final_subkey_string
+    
+    for i in range(len(plaintext)//16):
+        plaintext_arr=string_to_bit_array(plaintext[i*16:(i+1)*16])
+        temp_arr=xor(plaintext_arr,key_arr)
+        keys.append(bit_array_to_string(temp_arr))
+    if len(keys)<8:
+        diff=8-len(keys)
+        for i in range(diff):
+            keys.append(keys[i])
+    
+    return keys
 
 def round(plaintext,subkey):
     subkey_L=subkey[:8]
@@ -110,6 +121,7 @@ def round(plaintext,subkey):
     
     bit_array_R=string_to_bit_array(plaintext_R)
     #compresion and XOR operation
+    
     round_key_bit_array=permute(round_key_bit_array,compression_table)
    
     bit_array_R=xor(bit_array_R,round_key_bit_array) #performing XOR operation
@@ -122,11 +134,16 @@ def round(plaintext,subkey):
     bit_array_L=permute(bit_array_L,P1)
     encrypted_plaintext_R=bit_array_to_string(bit_array_R)
     encrypted_plaintext_L=bit_array_to_string(bit_array_L)
-    
-    print(plaintext_R,len(encrypted_plaintext_R))
-    print(plaintext_L,len(encrypted_plaintext_L))
+    result=encrypted_plaintext_L+encrypted_plaintext_R
+    return result
 
-    # return encrypted_plaintext_L+encrypted_plaintext_R
+def reverse_round(plaintext,subkey):
+    subkey_L=subkey[:8]
+    subkey_R=subkey[8:]
+    round_key=""
+    plaintext_R=plaintext[:4]
+    plaintext_L=plaintext[4:]
+
     
     
 def left_shift(arr):
@@ -134,21 +151,46 @@ def left_shift(arr):
 
 
     
+ENCRYPT=1
+DECRYPT=0
 
 
-
-class algorithm:
+class algorithm():
     def __init__(self):
         self.pswd=None
+        self.subkey=None
         self.subkeys=list()
         self.inputtext=None
+        self.ispadding=False
     
+    def perform_check(self,text):
+        if len(text)%16!=0:
+            text=addPadding(text)
+            self.ispadding=True
+        return text
+    
+    def encrypt(self,secret_key,plaintext):
+        res=""
+        if len(plaintext)%16!=0:
+            plaintext=addPadding(plaintext)
+            self.ispadding=True
+        self.pswd=secret_key
+        self.inputtext=plaintext
+        blocks=nsplit(self.inputtext,8)
+        round_encrypted_result=None
+        self.subkeys=generate_subkey(plaintext,secret_key)
+        for block in blocks:
+            roundtext=block
+            for j in range(1):
+                round_encrypted_result=round(roundtext,self.subkeys[j])
+                # print("{0} is converted to {1} using {2}".format(roundtext, round_encrypted_result,self.subkeys[j]))
+                roundtext=round_encrypted_result
+            res+=roundtext
+        return res
     # def encrypt(self,key,inputtext)
 # ------------------------------------------------------------ TESTING --------------------------------------------------------------------
 
 
-data=perform_check(data)
-
-round(data,generate_subkey(data,"w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA=="))
-
-
+# data=perform_check(data)
+# obj=algorithm()
+# r=obj.encrypt("w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",data)
