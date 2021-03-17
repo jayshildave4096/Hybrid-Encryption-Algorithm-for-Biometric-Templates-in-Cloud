@@ -30,14 +30,14 @@ P1_I=[22, 17, 23, 10, 9, 24, 5, 8,
       15, 28, 25, 20, 6, 29, 16, 32,
       21, 11, 7, 26, 18, 31, 4,19]
 
-compression_table=[1,14,17,11,24,1,5,3,
+compression_table=[1,14,17,11,24,60,5,39,
                    2,15,6,21,10,23,19,23,
-                   3,26,8,16,7,27,20,13,
+                   3,26,45,16,7,27,20,13,
                    4,41,52,31,37,47,55,30]
 
 
-data="02347681"
-# data="405017038435627636484172752865214277866651775463763522190982397500410205555857421123974212764844"
+# data="02347681"
+data="405017038435627636484172752865214277866651775463763522190982397500410205555857421123974212764844"
 # secret_key="yjayshil"
 # pswd="ganesha"
 def binvalue(val, bitsize): #Return the binary value as a string of the given size 
@@ -71,10 +71,9 @@ def xor(l1, l2):#Apply a xor and return the resulting list
 def addPadding(text):#Add padding to the datas using PKCS5 spec.
     pad_len = 16 - (len(text) % 16)
     text += pad_len * chr(pad_len)
-    return text
+    return [text,pad_len]
     
-def removePadding(text):#Remove the padding of the plain text (it assume there is padding)
-    pad_len = ord(text[-1])
+def removePadding(text,pad_len):#Remove the padding of the plain text (it assume there is padding)
     return text[:-pad_len]
 
 
@@ -104,7 +103,7 @@ def generate_subkey(plaintext,secretkey):   # Generate subkey for each round
     
     return keys
 
-def round(plaintext,subkey):
+def round(self,plaintext,subkey):
     subkey_L=subkey[:8]
     subkey_R=subkey[8:]
     round_key=""
@@ -115,41 +114,57 @@ def round(plaintext,subkey):
         round_key=subkey_R
     else:
         round_key=subkey_L
+    
     #converting strings to bit arrays
     round_key_bit_array=string_to_bit_array(round_key)
     bit_array_L=string_to_bit_array(plaintext_L)
     
     bit_array_R=string_to_bit_array(plaintext_R)
+    
     #compresion and XOR operation
     
     round_key_bit_array=permute(round_key_bit_array,compression_table)
-   
+    self.roundkeys.append(bit_array_to_string(round_key_bit_array))
     bit_array_R=xor(bit_array_R,round_key_bit_array) #performing XOR operation
-    
-    bit_array_R=left_shift(bit_array_R) #shifting bits to left
+    bit_array_R=shift(bit_array_R,1) #shifting bits to left
     
     bit_array_L=xor(bit_array_L,bit_array_R)
-   
-   
+    
+    
     bit_array_L=permute(bit_array_L,P1)
     encrypted_plaintext_R=bit_array_to_string(bit_array_R)
     encrypted_plaintext_L=bit_array_to_string(bit_array_L)
-    result=encrypted_plaintext_L+encrypted_plaintext_R
+    result=encrypted_plaintext_R+encrypted_plaintext_L
+    # print("{0} {1}".format(result,len(result)))
     return result
 
 def reverse_round(plaintext,subkey):
-    subkey_L=subkey[:8]
-    subkey_R=subkey[8:]
     round_key=""
     plaintext_R=plaintext[:4]
     plaintext_L=plaintext[4:]
-
+   
     
+    #converting strings to bit arrays
+    round_key_bit_array=string_to_bit_array(subkey)
+    bit_array_L=string_to_bit_array(plaintext_L)
+    bit_array_R=string_to_bit_array(plaintext_R)
     
-def left_shift(arr):
-    return arr[1: ]+arr[:1]
+    #applying inverse permutation
+    bit_array_L=permute(bit_array_L,P1_I)
+    bit_array_L=xor(bit_array_L,bit_array_R)
+    #applying right shift
+    bit_array_R=shift(bit_array_R,-1)
+    
+    bit_array_R=xor(bit_array_R,round_key_bit_array)
+    
+    decrypted_plaintext_L=bit_array_to_string(bit_array_L)
+    decrypted_plaintext_R=bit_array_to_string(bit_array_R)
+    result=decrypted_plaintext_L+decrypted_plaintext_R
+    return result
 
-
+def shift(arr,n):
+    return arr[n:]+arr[:n]
+    
     
 ENCRYPT=1
 DECRYPT=0
@@ -160,8 +175,10 @@ class algorithm():
         self.pswd=None
         self.subkey=None
         self.subkeys=list()
+        self.roundkeys=list()
         self.inputtext=None
         self.ispadding=False
+        self.pad_len=0
     
     def perform_check(self,text):
         if len(text)%16!=0:
@@ -172,7 +189,7 @@ class algorithm():
     def encrypt(self,secret_key,plaintext):
         res=""
         if len(plaintext)%16!=0:
-            plaintext=addPadding(plaintext)
+            plaintext,self.pad_len=addPadding(plaintext)
             self.ispadding=True
         self.pswd=secret_key
         self.inputtext=plaintext
@@ -181,16 +198,34 @@ class algorithm():
         self.subkeys=generate_subkey(plaintext,secret_key)
         for block in blocks:
             roundtext=block
-            for j in range(1):
-                round_encrypted_result=round(roundtext,self.subkeys[j])
+            for j in range(8):
+                round_encrypted_result=round(self,roundtext,self.subkeys[j])
                 # print("{0} is converted to {1} using {2}".format(roundtext, round_encrypted_result,self.subkeys[j]))
                 roundtext=round_encrypted_result
             res+=roundtext
+            
         return res
-    # def encrypt(self,key,inputtext)
+    
+    def decrypt(self,key,plaintext):
+        res=""
+        self.pswd=key
+        self.inputtext=plaintext
+        blocks=nsplit(self.inputtext,8)
+        round_decrypted_result=None
+        for block in blocks:
+            roundtext=block
+            for j in range(7,-1,-1):
+                round_decrypted_result=reverse_round(roundtext,self.roundkeys[j])
+                roundtext=round_decrypted_result
+            res+=roundtext
+        return res
 # ------------------------------------------------------------ TESTING --------------------------------------------------------------------
 
 
-# data=perform_check(data)
-# obj=algorithm()
-# r=obj.encrypt("w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",data)
+
+obj=algorithm()
+e=obj.encrypt("w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",data)
+print(e)
+# print(len(r))
+d=obj.decrypt("w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",e)
+print(d==data)
