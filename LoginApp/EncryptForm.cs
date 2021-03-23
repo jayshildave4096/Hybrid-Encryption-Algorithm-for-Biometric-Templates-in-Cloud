@@ -99,10 +99,10 @@ namespace LoginApp
             string text=obj.run_algo("encrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",  "D:\\t.txt");
             // Console.WriteLine(text);
             //string d = obj.run_algo("decrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==", text);
-            //Console.WriteLine(encrpyt_Box.Text == d);
+            
             Console.WriteLine(encrpyt_Box.Text.Length);
             string allText = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
-           
+            Console.WriteLine(allText);
             Console.WriteLine(allText.Length);
         }
     }
