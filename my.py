@@ -209,7 +209,7 @@ class algorithm():
             
             res+=roundtext
         
-        return res
+        return [res,self.subkeys,self.pad_len]
     
     def decrypt(self,key,plaintext):
         res=""
@@ -244,6 +244,14 @@ def get_text(path):
 def write_text(text):
     f=open("D:\\d.txt","w",encoding="utf-8")
     f.write(text)
+    f.close()
+
+def write_keys(key):
+    f=open("D:\\keys.txt","a",encoding="utf-8")
+    for i in range(8):
+        f.write(key[i]+"\n")
+    f.close()
+
 
 def run():
     argv = sys.argv
@@ -252,8 +260,12 @@ def run():
     if argv[1] == 'encrypt':
         data=get_text(argv[3])
         res=obj.encrypt(argv[2],data)
-        write_text(res)
-        print("hello")
+        etext=res[0]
+        keys=res[1]
+        pad_len=res[2]
+        write_text(etext)
+        write_keys(keys)
+        print(pad_len)
 
     if argv[1] == 'decrypt':
         # print(argv[3])
