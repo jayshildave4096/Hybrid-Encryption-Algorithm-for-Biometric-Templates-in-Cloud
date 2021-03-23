@@ -35,8 +35,8 @@ namespace LoginApp
                     fs.Position = 0;
                     BinaryReader br = new BinaryReader(fs);
                     Byte[] bytes = br.ReadBytes(template.Bytes.Length);
-                    encrpyt_Box.Text = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
-                    File.WriteAllText("D:\\t.txt", encrpyt_Box.Text);
+                    textBox3.Text = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
+                    File.WriteAllText("D:\\t.txt", textBox3.Text);
                     OnTemplate(template);
                     fs.Close();
                 }
@@ -97,13 +97,9 @@ namespace LoginApp
             
             PythonScript obj = new PythonScript();
             string text=obj.run_algo("encrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",  "D:\\t.txt");
-            // Console.WriteLine(text);
-            //string d = obj.run_algo("decrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==", text);
+            string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);            
+            textBox2.Text = encrypted_text;
             
-            Console.WriteLine(encrpyt_Box.Text.Length);
-            string allText = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
-            Console.WriteLine(allText);
-            Console.WriteLine(allText.Length);
         }
     }
 	
