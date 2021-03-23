@@ -36,6 +36,7 @@ namespace LoginApp
             this.faceCapture_Button = new System.Windows.Forms.Button();
             this.faceEncrypt_Button = new System.Windows.Forms.Button();
             this.VerifyButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // fingerprintCapture_Button
@@ -80,7 +81,7 @@ namespace LoginApp
             // 
             // faceCapture_Button
             // 
-            this.faceCapture_Button.Location = new System.Drawing.Point(188, 310);
+            this.faceCapture_Button.Location = new System.Drawing.Point(76, 310);
             this.faceCapture_Button.Name = "faceCapture_Button";
             this.faceCapture_Button.Size = new System.Drawing.Size(150, 76);
             this.faceCapture_Button.TabIndex = 5;
@@ -90,7 +91,7 @@ namespace LoginApp
             // 
             // faceEncrypt_Button
             // 
-            this.faceEncrypt_Button.Location = new System.Drawing.Point(436, 310);
+            this.faceEncrypt_Button.Location = new System.Drawing.Point(292, 310);
             this.faceEncrypt_Button.Name = "faceEncrypt_Button";
             this.faceEncrypt_Button.Size = new System.Drawing.Size(151, 76);
             this.faceEncrypt_Button.TabIndex = 6;
@@ -108,11 +109,21 @@ namespace LoginApp
             this.VerifyButton.UseVisualStyleBackColor = true;
             this.VerifyButton.Click += new System.EventHandler(this.VerifyButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(485, 307);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 79);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Verify";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Selection_Page
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 499);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.VerifyButton);
             this.Controls.Add(this.faceEncrypt_Button);
             this.Controls.Add(this.faceCapture_Button);
@@ -136,5 +147,6 @@ namespace LoginApp
         private System.Windows.Forms.Button faceCapture_Button;
         private System.Windows.Forms.Button faceEncrypt_Button;
         private System.Windows.Forms.Button VerifyButton;
+        private System.Windows.Forms.Button button1;
     }
 }

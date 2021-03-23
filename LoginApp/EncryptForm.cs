@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace LoginApp
 {
     public partial class EncryptForm :Form, DPFP.Capture.EventHandler
@@ -34,15 +35,16 @@ namespace LoginApp
                     fs.Position = 0;
                     BinaryReader br = new BinaryReader(fs);
                     Byte[] bytes = br.ReadBytes(template.Bytes.Length);
-                    textBox.Text = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
-                    Console.WriteLine(template.Bytes.Length);
-                    //OnTemplate(template);
+                    encrpyt_Box.Text = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
+                    File.WriteAllText("D:\\t.txt", encrpyt_Box.Text);
+                    OnTemplate(template);
+                    fs.Close();
                 }
             }
             
 
         }
-   
+     
         private void OnTemplate(DPFP.Template template)
         {
 
@@ -83,6 +85,25 @@ namespace LoginApp
         public void OnSampleQuality(object Capture, string ReaderSerialNumber, CaptureFeedback CaptureFeedback)
         {
             throw new NotImplementedException();
+        }
+
+        private void Encrypt_Button_Click(object sender, EventArgs e)
+        {
+            String FolderPath=String.Empty;
+            FolderBrowserDialog fb = new FolderBrowserDialog();
+
+            if (fb.ShowDialog() == DialogResult.OK)
+                FolderPath = fb.SelectedPath;
+            
+            PythonScript obj = new PythonScript();
+            string text=obj.run_algo("encrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",  "D:\\t.txt");
+            // Console.WriteLine(text);
+            //string d = obj.run_algo("decrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==", text);
+            //Console.WriteLine(encrpyt_Box.Text == d);
+            Console.WriteLine(encrpyt_Box.Text.Length);
+            string allText = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
+           
+            Console.WriteLine(allText.Length);
         }
     }
 	

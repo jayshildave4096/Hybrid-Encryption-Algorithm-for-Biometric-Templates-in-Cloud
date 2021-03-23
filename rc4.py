@@ -76,11 +76,7 @@ def encode_qr(data: str, filepath='encrypted.png'):
 #     True
 #     '''
 import sys
-def p():
-    __doc__ = '''Options:
-    pyrc4 encrypt2qr data key filepath
-    pyrc4 encrypt data key
-    pyrc4 decrypt data key'''
+def run():
     argv = sys.argv
     
     if argv[1] == 'encrypt':
@@ -89,6 +85,8 @@ def p():
         print(decrypt(argv[2], argv[3]))
     
 if __name__ == '__main__':
-    p()
+    run()
+ 
+
     
    
