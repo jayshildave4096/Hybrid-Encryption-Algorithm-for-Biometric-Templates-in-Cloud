@@ -39,6 +39,7 @@ namespace LoginApp
                     File.WriteAllText("D:\\t.txt", textBox3.Text);
                     OnTemplate(template);
                     fs.Close();
+                    
                 }
             }
             
@@ -89,16 +90,12 @@ namespace LoginApp
 
         private void Encrypt_Button_Click(object sender, EventArgs e)
         {
-            String FolderPath=String.Empty;
-            FolderBrowserDialog fb = new FolderBrowserDialog();
-
-            if (fb.ShowDialog() == DialogResult.OK)
-                FolderPath = fb.SelectedPath;
-            
             PythonScript obj = new PythonScript();
             string text=obj.run_algo("encrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",  "D:\\t.txt");
-            string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);            
-            textBox2.Text = encrypted_text;
+            string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
+            byte[] b = Encoding.UTF8.GetBytes(encrypted_text);
+            string base64 = Convert.ToBase64String(b);
+            textBox2.Text = base64;
             
         }
     }

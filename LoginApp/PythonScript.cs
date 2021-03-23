@@ -46,7 +46,7 @@ namespace LoginApp
             };
             p.Start();
             
-            string output = p.StandardOutput.ReadToEnd();
+            string  output = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
             
             return output;

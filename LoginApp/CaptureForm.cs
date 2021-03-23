@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace LoginApp
 {
@@ -24,6 +25,7 @@ namespace LoginApp
         delegate void SetTextCallback(string text);
         delegate void UpdateStatusCallback(string text);
         delegate void UpdateSaveButtonCallback(bool t);
+        delegate void UpdateUploadButtonCallback(bool t);
         public Capture Capturer { get; private set; } = new Capture();
         protected override void OnLoad(EventArgs e)
         {
@@ -70,6 +72,7 @@ namespace LoginApp
                             
                             SetText("Capture complete...Template generated");
                             UpdateSaveButton(true);
+                            UpdateUploadButton(true);
                             if (null != Capturer)
                             {
                                 try
@@ -229,6 +232,21 @@ namespace LoginApp
             }
         }
 
+        private void UpdateUploadButton(bool t)
+        {
+            if (this.Upload_Button.InvokeRequired)
+            {
+                UpdateUploadButtonCallback d = new UpdateUploadButtonCallback(UpdateUploadButton);
+                this.Invoke(d, new object[] { t });
+            }
+            else
+            {
+                this.Upload_Button.Enabled = t;
+               
+            }
+        }
+        
+
         protected DPFP.FeatureSet ExtractFeatures(DPFP.Sample Sample, DPFP.Processing.DataPurpose Purpose)
         {
             DPFP.Processing.FeatureExtraction Extractor = new DPFP.Processing.FeatureExtraction();  // Create a feature extractor
@@ -255,6 +273,46 @@ namespace LoginApp
         private DPFP.Processing.Enrollment Enroller;
         private DPFP.Template Template;
 
-        
+        private void Upload_Button_Click(object sender, EventArgs e)
+        {
+            //Open SQL Connection
+            string sqlquery = String.Empty;
+            SqlConnection conn;
+            SqlCommand query;
+            SqlDataReader dataReader;
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+            conn = new SqlConnection();
+            conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
+            conn.Open();
+            PythonScript obj = new PythonScript();
+            
+            //Serilaise Template get plaintext
+            
+            MemoryStream fingerprintData = new MemoryStream();
+            Enroller.Template.Serialize(fingerprintData);
+            fingerprintData.Position = 0;
+            BinaryReader br = new BinaryReader(fingerprintData);
+            Byte[] bytes = br.ReadBytes((Int32)Enroller.Template.Bytes.Length);
+            String plaintext = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
+            File.WriteAllText("D:\\t.txt", plaintext);
+           
+            //Encrypt Template
+
+            int padding_length = Int32.Parse(obj.run_algo("encrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==", "D:\\t.txt"));
+            string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
+            byte[] b = Encoding.UTF8.GetBytes(encrypted_text);
+            string base64 = Convert.ToBase64String(b);
+
+            //Run SQL Query
+            MessageBox.Show(encrypted_text.Length + "\n");
+            sqlquery = $"INSERT INTO Templates VALUES('{base64}');";
+            query = new SqlCommand(sqlquery, conn);
+            dataAdapter.InsertCommand = new SqlCommand(sqlquery, conn);
+            dataAdapter.InsertCommand.ExecuteNonQuery();
+            query.Dispose();
+            conn.Close();
+
+
+        }
     }
 }
