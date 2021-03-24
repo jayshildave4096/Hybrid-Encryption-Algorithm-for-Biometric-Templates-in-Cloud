@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LoginApp
 {
-    class PythonScript : Selection_Page
+    class PythonScript 
     {
         public string run_rc4(string op,string password,string key)
         {

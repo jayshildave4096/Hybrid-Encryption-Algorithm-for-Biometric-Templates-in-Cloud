@@ -12,14 +12,18 @@ namespace LoginApp
 {
     public partial class Selection_Page : Form
     {
-        public Selection_Page()
+        string user;
+        public Selection_Page(string username)
         {
+            user = username;
             InitializeComponent();
+            
         }
-
+        
+        
         private void fingerprintCapture_Button_Click(object sender, EventArgs e)
         {
-            (new CaptureForm()).Show();
+            (new CaptureForm(user)).Show();
             this.Close();
 
         }

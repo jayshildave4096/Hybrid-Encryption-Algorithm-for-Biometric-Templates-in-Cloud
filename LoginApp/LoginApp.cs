@@ -23,7 +23,7 @@ namespace LoginApp
             InitializeComponent();
         }
 
-        private String username, password,sqlquery,response;
+        public string username, password,sqlquery,response;
 
        
 
@@ -51,7 +51,7 @@ namespace LoginApp
                     {
                         response = response + dataReader.GetValue(0);
                     }
-                    Console.WriteLine(response);
+                    
                     string decrypted_password = obj.run_rc4("decrypt", response, "majorproject");
                     decrypted_password = decrypted_password.Replace("\n", "").Replace("\r", "");
                    
@@ -59,7 +59,7 @@ namespace LoginApp
                     {
                         //MessageBox.Show("Login Successful");
                         
-                        (new Selection_Page()).Show();
+                        (new Selection_Page(username)).Show();
                         this.Close();
                     }
                     else

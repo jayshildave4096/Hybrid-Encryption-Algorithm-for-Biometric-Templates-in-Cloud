@@ -36,6 +36,8 @@ namespace LoginApp
             this.FeatureRequiredText = new System.Windows.Forms.Label();
             this.Back_Button = new System.Windows.Forms.Button();
             this.Upload_Button = new System.Windows.Forms.Button();
+            this.ID_Label = new System.Windows.Forms.Label();
+            this.ID_Textbox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,11 +112,30 @@ namespace LoginApp
             this.Upload_Button.UseVisualStyleBackColor = true;
             this.Upload_Button.Click += new System.EventHandler(this.Upload_Button_Click);
             // 
+            // ID_Label
+            // 
+            this.ID_Label.AutoSize = true;
+            this.ID_Label.Location = new System.Drawing.Point(349, 444);
+            this.ID_Label.Name = "ID_Label";
+            this.ID_Label.Size = new System.Drawing.Size(21, 17);
+            this.ID_Label.TabIndex = 10;
+            this.ID_Label.Text = "ID";
+            // 
+            // ID_Textbox
+            // 
+            this.ID_Textbox.Location = new System.Drawing.Point(376, 444);
+            this.ID_Textbox.Name = "ID_Textbox";
+            this.ID_Textbox.Size = new System.Drawing.Size(126, 22);
+            this.ID_Textbox.TabIndex = 11;
+            this.ID_Textbox.TextChanged += new System.EventHandler(this.ID_Textbox_TextChanged);
+            // 
             // CaptureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 551);
+            this.Controls.Add(this.ID_Textbox);
+            this.Controls.Add(this.ID_Label);
             this.Controls.Add(this.Upload_Button);
             this.Controls.Add(this.Back_Button);
             this.Controls.Add(this.FeatureRequiredText);
@@ -139,5 +160,7 @@ namespace LoginApp
         private System.Windows.Forms.Label FeatureRequiredText;
         private System.Windows.Forms.Button Back_Button;
         private System.Windows.Forms.Button Upload_Button;
+        private System.Windows.Forms.Label ID_Label;
+        private System.Windows.Forms.TextBox ID_Textbox;
     }
 }

@@ -17,23 +17,45 @@ namespace LoginApp
     public partial class CaptureForm : Form, DPFP.Capture.EventHandler
 
     {
-       
-        public CaptureForm()
+        string sqlquery = String.Empty,response="";
+        SqlConnection conn;
+        SqlCommand query;
+        SqlDataReader dataReader;
+        SqlDataAdapter dataAdapter = new SqlDataAdapter();
+        private string password = "",uname="";
+
+        public CaptureForm(string username)
         {
+            uname = username;
             InitializeComponent();
         }
         delegate void SetTextCallback(string text);
         delegate void UpdateStatusCallback(string text);
         delegate void UpdateSaveButtonCallback(bool t);
         delegate void UpdateUploadButtonCallback(bool t);
+        public string TemplateID = "";
         public Capture Capturer { get; private set; } = new Capture();
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             Enroller = new DPFP.Processing.Enrollment();
             saveButton.Enabled = false;
-            StatusText.AppendText("The fingerprint reader was disconnected." + "\r\n");
+            StatusText.AppendText("Enter ID to begin capturing" + "\r\n");
             FeatureRequiredText.Text = "Captures Required:" + Enroller.FeaturesNeeded;
+
+            //Get User Data
+            conn = new SqlConnection();
+            conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
+            conn.Open();
+            sqlquery = $"select password from Userdata where username='{uname}';";
+            query = new SqlCommand(sqlquery, conn);
+            dataReader = query.ExecuteReader();
+            while (dataReader.Read())
+            {
+                response = response + dataReader.GetValue(0);
+            }
+            password = response; 
+            conn.Close();
         }
        
         public void Enroll()
@@ -43,8 +65,14 @@ namespace LoginApp
         }
         public void captureButton_Click(object sender, EventArgs e)
         {
+
             StatusText.Text = "";
-            Enroll();
+            if (ID_Textbox.Text.Length == 0)
+            {
+                MessageBox.Show("No ID entered, Please enter ID");
+            }
+            else { Enroll(); }
+            
         }
 
        
@@ -119,9 +147,12 @@ namespace LoginApp
             // Draw fingerprint sample image.
             DrawPicture(ConvertSampleToBitmap(Sample));
         }
-      
-        #region EVENT HANDLERS
 
+        #region EVENT HANDLERS
+        private void ID_Textbox_TextChanged(object sender, EventArgs e)
+        {
+            TemplateID = ID_Textbox.Text;
+        }
         public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
         {
             ((Capture)Capturer).StopCapture();
@@ -173,7 +204,7 @@ namespace LoginApp
         }
         private void Back_Button_Click(object sender, EventArgs e)
         {
-            (new Selection_Page()).Show();
+            (new Selection_Page(uname)).Show();
             this.Close();
         }
       
@@ -190,7 +221,7 @@ namespace LoginApp
         private void DrawPicture(Bitmap bitmap)
         {
             pictureBox.Image = new Bitmap(bitmap, pictureBox.Size);   // fit the image into the picture box
-            //bitmap.Save(@"C:\Users\davej\Desktop\temp1.bmp");
+           
         }
 
         private void SetText(string text)
@@ -276,11 +307,7 @@ namespace LoginApp
         private void Upload_Button_Click(object sender, EventArgs e)
         {
             //Open SQL Connection
-            string sqlquery = String.Empty;
-            SqlConnection conn;
-            SqlCommand query;
-            SqlDataReader dataReader;
-            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+           
             conn = new SqlConnection();
             conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
             conn.Open();
@@ -303,16 +330,38 @@ namespace LoginApp
             byte[] b = Encoding.UTF8.GetBytes(encrypted_text);
             string base64 = Convert.ToBase64String(b);
 
+            //Extract Keys
+            
+            string[] lines = File.ReadAllLines(@"D:\keys.txt");
+            string[] subkeys = new string[8];
+            for (int i = 0;i< 8; i++) {
+                byte[] temp = Encoding.UTF8.GetBytes(lines[i]);
+                string subkey_base64 = Convert.ToBase64String(temp);
+                subkeys[i] = subkey_base64;
+                
+            }
+            
             //Run SQL Query
-            MessageBox.Show(encrypted_text.Length + "\n");
-            sqlquery = $"INSERT INTO Templates VALUES('{base64}');";
+           
+            sqlquery = $"INSERT INTO Templates VALUES('{base64}',{padding_length},'{subkeys[0]}','{subkeys[1]}','{subkeys[2]}','{subkeys[3]}','{subkeys[4]}','{subkeys[5]}','{subkeys[6]}','{subkeys[7]}','{TemplateID}','{password}');";
             query = new SqlCommand(sqlquery, conn);
             dataAdapter.InsertCommand = new SqlCommand(sqlquery, conn);
-            dataAdapter.InsertCommand.ExecuteNonQuery();
-            query.Dispose();
-            conn.Close();
+            try {
+                dataAdapter.InsertCommand.ExecuteNonQuery();
+                query.Dispose();
+                MessageBox.Show("TEMPLATE UPLOADED SUCCESSFULLY");
+                conn.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                conn.Close();
+            }
+            
 
 
         }
+
+       
     }
 }
