@@ -109,6 +109,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Verify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Verify.Designer.cs">
+      <DependentUpon>Verify.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CaptureForm.resx">
       <DependentUpon>CaptureForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +135,9 @@
     </Compile>
     <EmbeddedResource Include="Selection_Page.resx">
       <DependentUpon>Selection_Page.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Verify.resx">
+      <DependentUpon>Verify.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

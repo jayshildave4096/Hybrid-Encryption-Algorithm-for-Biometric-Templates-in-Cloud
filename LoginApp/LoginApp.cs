@@ -59,7 +59,7 @@ namespace LoginApp
                     {
                         //MessageBox.Show("Login Successful");
                         
-                        (new Selection_Page(username)).Show();
+                        (new Selection_Page(username,response)).Show();
                         this.Close();
                     }
                     else

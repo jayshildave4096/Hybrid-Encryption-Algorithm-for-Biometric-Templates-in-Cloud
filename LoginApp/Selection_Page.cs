@@ -12,10 +12,11 @@ namespace LoginApp
 {
     public partial class Selection_Page : Form
     {
-        string user;
-        public Selection_Page(string username)
+        string user,pass;
+        public Selection_Page(string username,string password)
         {
             user = username;
+            pass = password;
             InitializeComponent();
             
         }
@@ -46,8 +47,8 @@ namespace LoginApp
 
         public void VerifyButton_Click(object sender, EventArgs e)
         {
-            //PythonScript obj = new PythonScript();
-            //obj.run_cmd();
+            (new Verify(pass)).Show();
+            this.Close();
         }
     }
 }
