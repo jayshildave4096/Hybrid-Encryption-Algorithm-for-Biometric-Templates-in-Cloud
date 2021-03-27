@@ -210,7 +210,7 @@ class algorithm():
         
         return [res,self.subkeys,self.pad_len]
     
-    def decrypt(self,keys,plaintext):
+    def decrypt(self,keys,plaintext,path,pad_len):
         res=""
         self.roundkeys=keys
         self.inputtext=plaintext
@@ -222,7 +222,7 @@ class algorithm():
                 round_decrypted_result=reverse_round(roundtext,self.roundkeys[j])
                 roundtext=round_decrypted_result
             res+=roundtext
-        return res
+        return removePadding(res,pad_len)
 #------------------------------------------------------------TESTING--------------------------------------------------------------------
 
 
