@@ -35,8 +35,8 @@ namespace LoginApp
             password = Password_TxtBox.Text;
             AWS_Button_Checked = AWS_Button.Checked;
             GCP_Button_Checked = GCP_Button.Checked;
-            Azure_Button_Checked = Azure_Button.Checked;
-            if (AWS_Button_Checked == true)
+            
+            if (AWS_Button_Checked == true || GCP_Button_Checked==true)
             {
                 try
                 {
@@ -86,8 +86,8 @@ namespace LoginApp
             password = Password_TxtBox.Text;
             AWS_Button_Checked = AWS_Button.Checked;
             GCP_Button_Checked = GCP_Button.Checked;
-            Azure_Button_Checked = Azure_Button.Checked;
-            if (AWS_Button_Checked)
+            
+            if (AWS_Button_Checked || GCP_Button_Checked)
             {
                 try
                 {

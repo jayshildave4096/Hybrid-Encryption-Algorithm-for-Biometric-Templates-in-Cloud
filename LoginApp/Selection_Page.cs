@@ -31,7 +31,7 @@ namespace LoginApp
 
         private void fingerprintEncrypt_Button_Click(object sender, EventArgs e)
         {
-            (new EncryptForm()).Show();
+            (new EncryptForm(user,pass)).Show();
             this.Close();
         }
 

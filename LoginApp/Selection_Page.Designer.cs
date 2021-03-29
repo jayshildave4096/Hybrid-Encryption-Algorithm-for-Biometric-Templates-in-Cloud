@@ -32,11 +32,7 @@ namespace LoginApp
             this.fingerprintCapture_Button = new System.Windows.Forms.Button();
             this.fingerprintEncrypt_Button = new System.Windows.Forms.Button();
             this.Fingerprint = new System.Windows.Forms.Label();
-            this.Face = new System.Windows.Forms.Label();
-            this.faceCapture_Button = new System.Windows.Forms.Button();
-            this.faceEncrypt_Button = new System.Windows.Forms.Button();
             this.VerifyButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // fingerprintCapture_Button
@@ -69,36 +65,6 @@ namespace LoginApp
             this.Fingerprint.TabIndex = 3;
             this.Fingerprint.Text = "FINGERPRINT";
             // 
-            // Face
-            // 
-            this.Face.AutoSize = true;
-            this.Face.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Face.Location = new System.Drawing.Point(339, 251);
-            this.Face.Name = "Face";
-            this.Face.Size = new System.Drawing.Size(80, 29);
-            this.Face.TabIndex = 4;
-            this.Face.Text = "FACE";
-            // 
-            // faceCapture_Button
-            // 
-            this.faceCapture_Button.Location = new System.Drawing.Point(76, 310);
-            this.faceCapture_Button.Name = "faceCapture_Button";
-            this.faceCapture_Button.Size = new System.Drawing.Size(150, 76);
-            this.faceCapture_Button.TabIndex = 5;
-            this.faceCapture_Button.Text = "Capture/Upload";
-            this.faceCapture_Button.UseVisualStyleBackColor = true;
-            this.faceCapture_Button.Click += new System.EventHandler(this.faceCapture_Button_Click);
-            // 
-            // faceEncrypt_Button
-            // 
-            this.faceEncrypt_Button.Location = new System.Drawing.Point(292, 310);
-            this.faceEncrypt_Button.Name = "faceEncrypt_Button";
-            this.faceEncrypt_Button.Size = new System.Drawing.Size(151, 76);
-            this.faceEncrypt_Button.TabIndex = 6;
-            this.faceEncrypt_Button.Text = "Encrypt/Decrypt";
-            this.faceEncrypt_Button.UseVisualStyleBackColor = true;
-            this.faceEncrypt_Button.Click += new System.EventHandler(this.faceEncrypt_Button_Click);
-            // 
             // VerifyButton
             // 
             this.VerifyButton.Location = new System.Drawing.Point(485, 127);
@@ -109,25 +75,12 @@ namespace LoginApp
             this.VerifyButton.UseVisualStyleBackColor = true;
             this.VerifyButton.Click += new System.EventHandler(this.VerifyButton_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(485, 307);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 79);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Verify";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // Selection_Page
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 499);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(734, 291);
             this.Controls.Add(this.VerifyButton);
-            this.Controls.Add(this.faceEncrypt_Button);
-            this.Controls.Add(this.faceCapture_Button);
-            this.Controls.Add(this.Face);
             this.Controls.Add(this.Fingerprint);
             this.Controls.Add(this.fingerprintEncrypt_Button);
             this.Controls.Add(this.fingerprintCapture_Button);
@@ -143,10 +96,6 @@ namespace LoginApp
         private System.Windows.Forms.Button fingerprintCapture_Button;
         private System.Windows.Forms.Button fingerprintEncrypt_Button;
         private System.Windows.Forms.Label Fingerprint;
-        private System.Windows.Forms.Label Face;
-        private System.Windows.Forms.Button faceCapture_Button;
-        private System.Windows.Forms.Button faceEncrypt_Button;
         private System.Windows.Forms.Button VerifyButton;
-        private System.Windows.Forms.Button button1;
     }
 }

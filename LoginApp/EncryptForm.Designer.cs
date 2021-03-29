@@ -30,17 +30,19 @@ namespace LoginApp
         private void InitializeComponent()
         {
             this.Encrypt_Button = new System.Windows.Forms.Button();
-            this.Decrypt_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.LoadButton = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Encrypt_Button
             // 
-            this.Encrypt_Button.Location = new System.Drawing.Point(511, 193);
+            this.Encrypt_Button.Location = new System.Drawing.Point(489, 209);
             this.Encrypt_Button.Name = "Encrypt_Button";
             this.Encrypt_Button.Size = new System.Drawing.Size(94, 43);
             this.Encrypt_Button.TabIndex = 0;
@@ -48,20 +50,11 @@ namespace LoginApp
             this.Encrypt_Button.UseVisualStyleBackColor = true;
             this.Encrypt_Button.Click += new System.EventHandler(this.Encrypt_Button_Click);
             // 
-            // Decrypt_Button
-            // 
-            this.Decrypt_Button.Location = new System.Drawing.Point(511, 273);
-            this.Decrypt_Button.Name = "Decrypt_Button";
-            this.Decrypt_Button.Size = new System.Drawing.Size(94, 43);
-            this.Decrypt_Button.TabIndex = 1;
-            this.Decrypt_Button.Text = "Decrypt";
-            this.Decrypt_Button.UseVisualStyleBackColor = true;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(512, 134);
+            this.label1.Location = new System.Drawing.Point(490, 134);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(93, 18);
             this.label1.TabIndex = 2;
@@ -69,7 +62,7 @@ namespace LoginApp
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(480, 155);
+            this.textBox1.Location = new System.Drawing.Point(459, 155);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(165, 22);
             this.textBox1.TabIndex = 3;
@@ -101,17 +94,47 @@ namespace LoginApp
             this.textBox2.Size = new System.Drawing.Size(457, 464);
             this.textBox2.TabIndex = 6;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(459, 276);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(118, 17);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Encryption Time :";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(462, 309);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 17);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "File Size :";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1029, 513);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(96, 43);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Back";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // EncryptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 577);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Decrypt_Button);
             this.Controls.Add(this.Encrypt_Button);
             this.Name = "EncryptForm";
             this.Text = "Form1";
@@ -123,11 +146,13 @@ namespace LoginApp
         #endregion
 
         private System.Windows.Forms.Button Encrypt_Button;
-        private System.Windows.Forms.Button Decrypt_Button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
     }
 }

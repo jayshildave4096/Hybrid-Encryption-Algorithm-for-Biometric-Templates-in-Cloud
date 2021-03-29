@@ -35,7 +35,6 @@ namespace LoginApp
             this.Password = new System.Windows.Forms.Label();
             this.AWS_Button = new System.Windows.Forms.RadioButton();
             this.GCP_Button = new System.Windows.Forms.RadioButton();
-            this.Azure_Button = new System.Windows.Forms.RadioButton();
             this.Username_TxtBox = new System.Windows.Forms.TextBox();
             this.Password_TxtBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -83,7 +82,7 @@ namespace LoginApp
             // AWS_Button
             // 
             this.AWS_Button.AutoSize = true;
-            this.AWS_Button.Location = new System.Drawing.Point(208, 224);
+            this.AWS_Button.Location = new System.Drawing.Point(245, 224);
             this.AWS_Button.Name = "AWS_Button";
             this.AWS_Button.Size = new System.Drawing.Size(60, 21);
             this.AWS_Button.TabIndex = 4;
@@ -94,24 +93,13 @@ namespace LoginApp
             // GCP_Button
             // 
             this.GCP_Button.AutoSize = true;
-            this.GCP_Button.Location = new System.Drawing.Point(301, 224);
+            this.GCP_Button.Location = new System.Drawing.Point(350, 224);
             this.GCP_Button.Name = "GCP_Button";
             this.GCP_Button.Size = new System.Drawing.Size(58, 21);
             this.GCP_Button.TabIndex = 5;
             this.GCP_Button.TabStop = true;
             this.GCP_Button.Text = "GCP";
             this.GCP_Button.UseVisualStyleBackColor = true;
-            // 
-            // Azure_Button
-            // 
-            this.Azure_Button.AutoSize = true;
-            this.Azure_Button.Location = new System.Drawing.Point(389, 224);
-            this.Azure_Button.Name = "Azure_Button";
-            this.Azure_Button.Size = new System.Drawing.Size(66, 21);
-            this.Azure_Button.TabIndex = 6;
-            this.Azure_Button.TabStop = true;
-            this.Azure_Button.Text = "Azure";
-            this.Azure_Button.UseVisualStyleBackColor = true;
             // 
             // Username_TxtBox
             // 
@@ -134,7 +122,6 @@ namespace LoginApp
             this.ClientSize = new System.Drawing.Size(651, 450);
             this.Controls.Add(this.Password_TxtBox);
             this.Controls.Add(this.Username_TxtBox);
-            this.Controls.Add(this.Azure_Button);
             this.Controls.Add(this.GCP_Button);
             this.Controls.Add(this.AWS_Button);
             this.Controls.Add(this.Password);
@@ -156,7 +143,6 @@ namespace LoginApp
         private System.Windows.Forms.Label Password;
         private System.Windows.Forms.RadioButton AWS_Button;
         private System.Windows.Forms.RadioButton GCP_Button;
-        private System.Windows.Forms.RadioButton Azure_Button;
         private System.Windows.Forms.TextBox Username_TxtBox;
         private System.Windows.Forms.TextBox Password_TxtBox;
     }

@@ -18,8 +18,11 @@ namespace LoginApp
     {
         private DPFP.Template Template;
         DPFP.Template template;
-        public EncryptForm()
+        string username = "", password = "";
+        public EncryptForm(string u,string p)
         {
+            username = u;
+            password = p;
             InitializeComponent();
         }
         private void LoadButton_Click(object sender, EventArgs e)
@@ -90,13 +93,26 @@ namespace LoginApp
 
         private void Encrypt_Button_Click(object sender, EventArgs e)
         {
+            var watch = new System.Diagnostics.Stopwatch();
+
+            watch.Start();
             PythonScript obj = new PythonScript();
             string text=obj.run_algo("encrypt", "w7jDuMOrJgRPwq0pJlJBw6wjw4oUwoTDn2RAwoTChMOfwqPChA==",  "D:\\t.txt");
+            watch.Stop();
+            label2.Text = "Encryption Time :" + (float)watch.ElapsedMilliseconds/1000 + "secs";
+            FileInfo fi = new FileInfo(@"C:\Users\davej\Desktop\m.fpt");
+            label3.Text = "File Size : " + (float)fi.Length + "Kb";
             string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
             byte[] b = Encoding.UTF8.GetBytes(encrypted_text);
             string base64 = Convert.ToBase64String(b);
             textBox2.Text = base64;
             
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            (new Selection_Page(username, password)).Show();
+            this.Close();
         }
     }
 	
