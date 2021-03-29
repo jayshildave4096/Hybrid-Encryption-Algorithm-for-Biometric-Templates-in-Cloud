@@ -36,9 +36,9 @@ namespace LoginApp
             this.Back_Button = new System.Windows.Forms.Button();
             this.FileLoadButton = new System.Windows.Forms.Button();
             this.Capture_Button = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.FARTextBox = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -93,6 +93,7 @@ namespace LoginApp
             this.FileLoadButton.TabIndex = 5;
             this.FileLoadButton.Text = "Load From Computer";
             this.FileLoadButton.UseVisualStyleBackColor = true;
+            this.FileLoadButton.Click += new System.EventHandler(this.FileLoadButton_Click);
             // 
             // Capture_Button
             // 
@@ -104,13 +105,13 @@ namespace LoginApp
             this.Capture_Button.UseVisualStyleBackColor = true;
             this.Capture_Button.Click += new System.EventHandler(this.captureButton_Click);
             // 
-            // pictureBox1
+            // pictureBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(16, 46);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(230, 385);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
+            this.pictureBox.Location = new System.Drawing.Point(16, 46);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(230, 385);
+            this.pictureBox.TabIndex = 7;
+            this.pictureBox.TabStop = false;
             // 
             // FARTextBox
             // 
@@ -127,7 +128,7 @@ namespace LoginApp
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.FARTextBox);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.Capture_Button);
             this.Controls.Add(this.FileLoadButton);
             this.Controls.Add(this.Back_Button);
@@ -137,7 +138,7 @@ namespace LoginApp
             this.Controls.Add(this.button1);
             this.Name = "Verify";
             this.Text = "Verify";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,7 +153,7 @@ namespace LoginApp
         private System.Windows.Forms.Button Back_Button;
         private System.Windows.Forms.Button FileLoadButton;
         private System.Windows.Forms.Button Capture_Button;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label FARTextBox;
     }
 }

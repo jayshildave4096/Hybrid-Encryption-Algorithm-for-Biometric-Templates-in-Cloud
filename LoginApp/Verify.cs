@@ -19,6 +19,8 @@ namespace LoginApp
         //Initialisation
         private DPFP.Processing.Enrollment Enroller;
         private DPFP.Template Template;
+        
+        
         private DPFP.Verification.Verification Verificator;
         string sqlquery = String.Empty, response = "";
         int ID;
@@ -64,20 +66,39 @@ namespace LoginApp
 
             // Process the sample and create a feature set for the enrollment purpose.
             DPFP.FeatureSet features = ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Verification);
-
-            // Check quality of the sample and start verification if it's good
-            // TODO: move to a separate task
-            if (features != null)
+            if (Template == null)
             {
-                // Compare the feature set with our template
-                DPFP.Verification.Verification.Result result = new DPFP.Verification.Verification.Result();
-                Verificator.Verify(features, Template, ref result);
-                UpdateStatus(result.FARAchieved);
-                if (result.Verified)
-                    SetText("The fingerprint was VERIFIED.");
-                else
-                    SetText("The fingerprint was NOT VERIFIED.");
+                MessageBox.Show("empty template");
             }
+            else
+            {
+                // Check quality of the sample and start verification if it's good
+                // TODO: move to a separate task
+                if (features != null)
+                {
+                    // Compare the feature set with our template
+                    DPFP.Verification.Verification.Result result = new DPFP.Verification.Verification.Result();
+                    Verificator.Verify(features, Template, ref result);
+                    UpdateStatus(result.FARAchieved);
+                    if (result.Verified)
+                        SetText("The fingerprint was VERIFIED.");
+                    else
+                        SetText("The fingerprint was NOT VERIFIED.");
+                    DrawPicture(ConvertSampleToBitmap(Sample));
+                }
+            }
+        }
+        protected Bitmap ConvertSampleToBitmap(DPFP.Sample Sample)
+        {
+            DPFP.Capture.SampleConversion Convertor = new DPFP.Capture.SampleConversion();  // Create a sample convertor.
+            Bitmap bitmap = null;                                                           // TODO: the size doesn't matter
+            Convertor.ConvertToPicture(Sample, ref bitmap); // TODO: return bitmap as a result
+            return bitmap;
+        }
+        private void DrawPicture(Bitmap bitmap)
+        {
+            pictureBox.Image = new Bitmap(bitmap, pictureBox.Size);   // fit the image into the picture box
+
         }
         protected DPFP.FeatureSet ExtractFeatures(DPFP.Sample Sample, DPFP.Processing.DataPurpose Purpose)
         {
@@ -153,6 +174,37 @@ namespace LoginApp
             }
         }
 
+        private void FileLoadButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Fingerprint Template File (*.fpt)|*.fpt";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream fs = File.Open(open.FileName, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    Template = new DPFP.Template(fs);
+                    Template.Serialize(fs);
+                    fs.Position = 0;
+                    BinaryReader br = new BinaryReader(fs);
+                    Byte[] bytes = br.ReadBytes(Template.Bytes.Length);
+                    OnTemplate(Template);
+                    fs.Close();
+
+                }
+            }
+        }
+        private void OnTemplate(DPFP.Template template)
+        {
+
+            Template = template;
+
+            if (Template != null)
+               SetText("THE FINGERPRINT TEMPLATE IS READY FOR VERIFITCATION");
+            else
+               SetText("LOAD ERROR");
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text == "")
@@ -163,6 +215,9 @@ namespace LoginApp
                 conn = new SqlConnection();
                 conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
                 conn.Open();
+                
+                                
+
                 Console.WriteLine(password);
                 sqlquery = $"select * from Templates where secretkey='{password}' and ID={ID}";
                 query = new SqlCommand(sqlquery, conn);
@@ -186,12 +241,13 @@ namespace LoginApp
                 query.Dispose();
                 conn.Close();
                 string[] keys = { values[2], values[3], values[4], values[5], values[6], values[7], values[8], values[9] };
-                string decryptedText= File.ReadAllText("D:\\my.txt", Encoding.UTF8);
-                byte[] bytes = Encoding.ASCII.GetBytes(decryptedText);
-                MemoryStream ms = new MemoryStream(bytes);
+                string decrypted_text = File.ReadAllText("D:\\my.txt", Encoding.UTF8);
+                byte[] bytes = Encoding.UTF8.GetBytes(decrypted_text);
+                
 
                 Template = new DPFP.Template();
-                Template.DeSerialize(ms);
+                Template.DeSerialize(bytes);
+                
                 SetText("Template Loaded, Click Capture to Verify");
             }
             
