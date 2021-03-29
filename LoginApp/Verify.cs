@@ -17,7 +17,13 @@ namespace LoginApp
     public partial class Verify : Form, DPFP.Capture.EventHandler
     {
         //Initialisation
+        private DPFP.Processing.Enrollment Enroller;
+        private DPFP.Template Template;
+        private DPFP.Verification.Verification Verificator;
         string sqlquery = String.Empty, response = "";
+        int ID;
+        delegate void SetTextCallback(string text);
+        delegate void UpdateStatusCallback(int FAR);
         SqlConnection conn;
         SqlCommand query;
         SqlDataReader dataReader;
@@ -28,71 +34,170 @@ namespace LoginApp
             password = p;
             InitializeComponent();
         }
+        public Capture Capturer { get; private set; } = new Capture();
+        
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            Enroller = new DPFP.Processing.Enrollment();
+            
+            StatusText.AppendText("Load Template" + "\r\n");
+            Verificator = new DPFP.Verification.Verification();
 
+
+        }
+        public void captureButton_Click(object sender, EventArgs e)
+        {
+
+            StatusText.Text = "";
+            Enroll(); 
+
+        }
+        public void Enroll()
+        {
+            Capturer.EventHandler = this;
+            Capturer.StartCapture();
+        }
+        protected virtual void Process(DPFP.Sample Sample)
+        {
+            
+
+            // Process the sample and create a feature set for the enrollment purpose.
+            DPFP.FeatureSet features = ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Verification);
+
+            // Check quality of the sample and start verification if it's good
+            // TODO: move to a separate task
+            if (features != null)
+            {
+                // Compare the feature set with our template
+                DPFP.Verification.Verification.Result result = new DPFP.Verification.Verification.Result();
+                Verificator.Verify(features, Template, ref result);
+                UpdateStatus(result.FARAchieved);
+                if (result.Verified)
+                    SetText("The fingerprint was VERIFIED.");
+                else
+                    SetText("The fingerprint was NOT VERIFIED.");
+            }
+        }
+        protected DPFP.FeatureSet ExtractFeatures(DPFP.Sample Sample, DPFP.Processing.DataPurpose Purpose)
+        {
+            DPFP.Processing.FeatureExtraction Extractor = new DPFP.Processing.FeatureExtraction();  // Create a feature extractor
+            DPFP.Capture.CaptureFeedback feedback = DPFP.Capture.CaptureFeedback.None;
+            DPFP.FeatureSet features = new DPFP.FeatureSet();
+            Extractor.CreateFeatureSet(Sample, Purpose, ref feedback, ref features);            // TODO: return features as a result?
+            if (feedback == DPFP.Capture.CaptureFeedback.Good)
+                return features;
+            else
+                return null;
+        }
         public void OnComplete(object Capture, string ReaderSerialNumber, Sample Sample)
         {
-            throw new NotImplementedException();
+            ((Capture)Capturer).StopCapture();
+            Process(Sample);
         }
 
         public void OnFingerGone(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            SetText("The finger was removed from the fingerprint reader.");
         }
 
         public void OnFingerTouch(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            SetText("The fingerprint reader was touched.");
         }
 
         public void OnReaderConnect(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            SetText("The fingerprint reader was connected.");
         }
 
         public void OnReaderDisconnect(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            SetText("The fingerprint reader was disconnected.");
         }
 
         public void OnSampleQuality(object Capture, string ReaderSerialNumber, CaptureFeedback CaptureFeedback)
         {
-            throw new NotImplementedException();
+            if (CaptureFeedback == DPFP.Capture.CaptureFeedback.Good)
+                SetText("The quality of the fingerprint sample is good." + "\r\n");
+            else
+                SetText("The quality of the fingerprint sample is poor." + "\r\n");
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            ID = Int32.Parse(textBox1.Text);
+        }
+        private void UpdateStatus(int FAR)
+        {
+            if (this.FARTextBox.InvokeRequired)
+            {
+                UpdateStatusCallback d = new UpdateStatusCallback(UpdateStatus);
+                this.Invoke(d, new object[] { FAR });
+            }
+            else
+            {
+                this.FARTextBox.Text = "FAR: " + FAR.ToString();
+            }
+        }
+        private void SetText(string text)
+        {
+            if (this.StatusText.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.StatusText.AppendText(text + "\r\n");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conn = new SqlConnection();
-            conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
-            conn.Open();
-            Console.WriteLine(password);
-            sqlquery = $"select * from Templates where secretkey='{password}'";
-            query = new SqlCommand(sqlquery, conn);
-            dataReader = query.ExecuteReader();
-            string[] values = new string[12];
-            while (dataReader.Read())
+            if (textBox1.Text == "")
             {
-                byte[] b;
-                for (int i = 2; i < 10; i++)
-                {
-                    b = Convert.FromBase64String(dataReader.GetValue(i).ToString().Replace("\n",""));
-                    values[i] = System.Text.Encoding.UTF8.GetString(b);
-                }
-                b = Convert.FromBase64String(dataReader.GetValue(0).ToString());
-                values[0] = System.Text.Encoding.UTF8.GetString(b);
-                values[1] = dataReader.GetValue(1).ToString();
-                values[11] = dataReader.GetValue(11).ToString();
-
+                MessageBox.Show("Please Enter ID to load from Database");
             }
-            dataReader.Close();
-            query.Dispose();
-            conn.Close();
-            string[] keys = {values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9]};
-            PythonScript obj = new PythonScript();
+            else {
+                conn = new SqlConnection();
+                conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
+                conn.Open();
+                Console.WriteLine(password);
+                sqlquery = $"select * from Templates where secretkey='{password}' and ID={ID}";
+                query = new SqlCommand(sqlquery, conn);
+                dataReader = query.ExecuteReader();
+                string[] values = new string[12];
+                while (dataReader.Read())
+                {
+                    byte[] b;
+                    for (int i = 2; i < 10; i++)
+                    {
+                        b = Convert.FromBase64String(dataReader.GetValue(i).ToString().Replace("\n", ""));
+                        values[i] = System.Text.Encoding.UTF8.GetString(b);
+                    }
+                    b = Convert.FromBase64String(dataReader.GetValue(0).ToString());
+                    values[0] = System.Text.Encoding.UTF8.GetString(b);
+                    values[1] = dataReader.GetValue(1).ToString();
+                    values[11] = dataReader.GetValue(11).ToString();
+
+                }
+                dataReader.Close();
+                query.Dispose();
+                conn.Close();
+                string[] keys = { values[2], values[3], values[4], values[5], values[6], values[7], values[8], values[9] };
+                string decryptedText= File.ReadAllText("D:\\my.txt", Encoding.UTF8);
+                byte[] bytes = Encoding.ASCII.GetBytes(decryptedText);
+                MemoryStream ms = new MemoryStream(bytes);
+
+                Template = new DPFP.Template();
+                Template.DeSerialize(ms);
+                SetText("Template Loaded, Click Capture to Verify");
+            }
             
-            File.WriteAllText("D:\\d.txt", values[0]);
-            response = obj.run_algo_decrypt("decrypt", values[1]);
-            File.WriteAllText("D:\\results.txt",response, Encoding.UTF8);
-            MessageBox.Show("Done");
+            
+            
+            
         }
     }
 }
