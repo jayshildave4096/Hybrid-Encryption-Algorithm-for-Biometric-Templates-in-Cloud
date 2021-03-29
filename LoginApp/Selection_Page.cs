@@ -47,7 +47,7 @@ namespace LoginApp
 
         public void VerifyButton_Click(object sender, EventArgs e)
         {
-            (new Verify(pass)).Show();
+            (new Verify(user,pass)).Show();
             this.Close();
         }
     }

@@ -217,7 +217,8 @@ namespace LoginApp
         {
             DPFP.Capture.SampleConversion Convertor = new DPFP.Capture.SampleConversion();  // Create a sample convertor.
             Bitmap bitmap = null;                                                           // TODO: the size doesn't matter
-            Convertor.ConvertToPicture(Sample, ref bitmap); // TODO: return bitmap as a result
+            Convertor.ConvertToPicture(Sample, ref bitmap);
+            bitmap.Save(@"D:\my.png");// TODO: return bitmap as a result
             return bitmap;     
         }
 

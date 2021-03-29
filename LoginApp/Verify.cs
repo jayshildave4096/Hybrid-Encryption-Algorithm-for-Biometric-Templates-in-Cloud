@@ -30,10 +30,11 @@ namespace LoginApp
         SqlCommand query;
         SqlDataReader dataReader;
         SqlDataAdapter dataAdapter = new SqlDataAdapter();
-        string password = "";
-        public Verify(string p)
+        string password = "",username="";
+        public Verify(string u,string p)
         {
             password = p;
+            username = u;
             InitializeComponent();
         }
         public Capture Capturer { get; private set; } = new Capture();
@@ -144,7 +145,11 @@ namespace LoginApp
             else
                 SetText("The quality of the fingerprint sample is poor." + "\r\n");
         }
-
+        private void Back_Button_Click(object sender, EventArgs e)
+        {
+            (new Selection_Page(username, password)).Show();
+            this.Close();
+        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             ID = Int32.Parse(textBox1.Text);
@@ -180,6 +185,7 @@ namespace LoginApp
             open.Filter = "Fingerprint Template File (*.fpt)|*.fpt";
             if (open.ShowDialog() == DialogResult.OK)
             {
+                
                 using (FileStream fs = File.Open(open.FileName, FileMode.Open, FileAccess.ReadWrite))
                 {
                     Template = new DPFP.Template(fs);
@@ -241,12 +247,15 @@ namespace LoginApp
                 query.Dispose();
                 conn.Close();
                 string[] keys = { values[2], values[3], values[4], values[5], values[6], values[7], values[8], values[9] };
+                FileStream fs = File.Open(@"C:\Users\davej\Desktop\m.fpt", FileMode.Open, FileAccess.ReadWrite);
                 string decrypted_text = File.ReadAllText("D:\\my.txt", Encoding.UTF8);
-                byte[] bytes = Encoding.UTF8.GetBytes(decrypted_text);
-                
 
-                Template = new DPFP.Template();
-                Template.DeSerialize(bytes);
+                byte[] bytes = Encoding.ASCII.GetBytes(decrypted_text);
+
+                Template = new DPFP.Template(fs);
+                Template.Serialize(fs);
+                OnTemplate(Template);
+                fs.Close();
                 
                 SetText("Template Loaded, Click Capture to Verify");
             }
