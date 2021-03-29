@@ -103,7 +103,6 @@ namespace LoginApp
             // 
             // Upload_Button
             // 
-            this.Upload_Button.Enabled = false;
             this.Upload_Button.Location = new System.Drawing.Point(551, 34);
             this.Upload_Button.Name = "Upload_Button";
             this.Upload_Button.Size = new System.Drawing.Size(153, 36);

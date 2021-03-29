@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace LoginApp
 {
@@ -64,7 +65,7 @@ namespace LoginApp
             conn.ConnectionString = "Data Source=database-3.cjdjsdhihrxl.us-east-1.rds.amazonaws.com,1433;Initial Catalog=UserDetails;User ID=Jayshil;Password=yjayshil";
             conn.Open();
             Console.WriteLine(password);
-            sqlquery = $"select * from Templates where secretkey='{password}';";
+            sqlquery = $"select * from Templates where secretkey='{password}' and ID=2;";
             query = new SqlCommand(sqlquery, conn);
             dataReader = query.ExecuteReader();
             string[] values = new string[12];
@@ -85,8 +86,13 @@ namespace LoginApp
             dataReader.Close();
             query.Dispose();
             conn.Close();
-           
+            string[] keys = { values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9],values[10] };
+            PythonScript obj = new PythonScript();
 
+            //File.WriteAllText("D:\\d.txt", values[0]);
+            response = obj.run_algo_decrypt("decrypt",keys, values[1],values[0]);
+            File.WriteAllText("D:\\results.txt", response,Encoding.UTF8);
+            MessageBox.Show("Done");
         }
     }
 }
