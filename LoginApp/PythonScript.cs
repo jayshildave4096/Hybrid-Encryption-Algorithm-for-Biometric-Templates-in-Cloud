@@ -53,12 +53,12 @@ namespace LoginApp
 
         }
 
-        public string run_algo_decrypt(string op, string[] keys,string pad_len,string data)
+        public string run_algo_decrypt(string op,string pad_len)
         {
             string fileName = @"C:\Users\davej\Desktop\my.py";
 
             Process p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"D:\ProgramData\python.exe", string.Format("{0} {1} {2} {3} {4}", fileName, op, keys,pad_len,data))
+            p.StartInfo = new ProcessStartInfo(@"D:\ProgramData\python.exe", string.Format("{0} {1} {2}", fileName, op,pad_len))
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,

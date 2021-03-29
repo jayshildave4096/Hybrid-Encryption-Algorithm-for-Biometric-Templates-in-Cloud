@@ -22,12 +22,12 @@ namespace LoginApp
         SqlCommand query;
         SqlDataReader dataReader;
         SqlDataAdapter dataAdapter = new SqlDataAdapter();
-        private string pass = "",uname="";
+        private string password = "",uname="";
 
-        public CaptureForm(string username,string password)
+        public CaptureForm(string username)
         {
             uname = username;
-            pass = password;
+            
             InitializeComponent();
         }
         delegate void SetTextCallback(string text);
@@ -55,7 +55,9 @@ namespace LoginApp
             {
                 response = response + dataReader.GetValue(0);
             }
-            password = response; 
+            
+            password = response;
+            
             conn.Close();
         }
        
@@ -316,17 +318,17 @@ namespace LoginApp
             
             //Serilaise Template get plaintext
             
-           /* MemoryStream fingerprintData = new MemoryStream();
+            MemoryStream fingerprintData = new MemoryStream();
             Enroller.Template.Serialize(fingerprintData);
             fingerprintData.Position = 0;
             BinaryReader br = new BinaryReader(fingerprintData);
             Byte[] bytes = br.ReadBytes((Int32)Enroller.Template.Bytes.Length);
             String plaintext = String.Join("", Array.ConvertAll(bytes, byteValue => byteValue.ToString()));
-            File.WriteAllText("D:\\t.txt", plaintext);*/
+            File.WriteAllText("D:\\t.txt", plaintext);
            
             //Encrypt Template
 
-            int padding_length = Int32.Parse(obj.run_algo("encrypt", pass, "D:\\t.txt"));
+            int padding_length = Int32.Parse(obj.run_algo("encrypt", password, "D:\\t.txt"));
             string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
             byte[] b = Encoding.UTF8.GetBytes(encrypted_text);
             string base64 = Convert.ToBase64String(b);
