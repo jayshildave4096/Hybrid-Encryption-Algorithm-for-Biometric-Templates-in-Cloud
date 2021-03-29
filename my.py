@@ -137,7 +137,7 @@ def round(self,plaintext,subkey):
     encrypted_plaintext_R=bit_array_to_string(bit_array_R)
     encrypted_plaintext_L=bit_array_to_string(bit_array_L)
     result=encrypted_plaintext_R+encrypted_plaintext_L
-    # print("{0} {1}".format(result,len(result)))
+    
     return result
 
 def reverse_round(plaintext,subkey):
@@ -202,15 +202,13 @@ class algorithm():
             roundtext=block
             for j in range(8):
                 round_encrypted_result=round(self,roundtext,self.subkeys[j])
-                # print("{0} used to convert {1} into {2}".format(self.subkeys[j],roundtext,round_encrypted_result))
-                # print("{0} is converted to {1} using {2}".format(roundtext, round_encrypted_result,self.subkeys[j]))
                 roundtext=round_encrypted_result
             
             res+=roundtext
         
-        return [res,self.subkeys,self.pad_len]
+        return [res,self.roundkeys,self.pad_len]
     
-    def decrypt(self,keys,plaintext,path,pad_len):
+    def decrypt(self,keys,pad_len,plaintext):
         res=""
         self.roundkeys=keys
         self.inputtext=plaintext
@@ -250,6 +248,23 @@ def write_keys(key):
     f.write(key)
     f.close()
 
+def read_text():
+    f=open("D:\\d.txt","r",encoding="utf-8")
+    t=f.read()
+    return t
+
+def read_keys():
+    f=open("D:\\keys.txt","r",encoding="utf-8")
+    lines=f.readlines()
+    for i in range(8):
+        lines[i]=lines[i].replace("\n","")
+    return lines
+
+def temp(text):
+    f=open("D:\\my.txt","w",encoding="utf-8")
+    f.write(text)
+    f.close()
+
 
 def run():
     argv = sys.argv
@@ -264,14 +279,17 @@ def run():
         pad_len=res[2]
         write_text(etext)
         write_keys(keys)
+        dec_res=obj.decrypt(res[1],pad_len,etext)
+        temp(dec_res)
         print(pad_len)
 
     if argv[1] == 'decrypt':
-        # print(argv[3])
-        res=obj.decrypt(argv[2], argv[3])
-        print(res)
+        keys=read_keys()
+        data=read_text()
+        res=obj.decrypt(keys,int(argv[2]),data)
+        temp(res)
+      
 
     
 if __name__ == '__main__':
     run()
-# write_text(e)  
