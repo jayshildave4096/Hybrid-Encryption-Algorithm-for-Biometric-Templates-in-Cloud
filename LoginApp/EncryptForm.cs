@@ -101,7 +101,7 @@ namespace LoginApp
             watch.Stop();
             label2.Text = "Encryption Time :" + (float)watch.ElapsedMilliseconds/1000 + "secs";
             FileInfo fi = new FileInfo(@"C:\Users\davej\Desktop\m.fpt");
-            label3.Text = "File Size : " + (float)fi.Length + "Kb";
+            label3.Text = "File Size : " + (float)fi.Length/1000 + "Kb";
             string encrypted_text = File.ReadAllText(@"D:\d.txt", Encoding.UTF8);
             byte[] b = Encoding.UTF8.GetBytes(encrypted_text);
             string base64 = Convert.ToBase64String(b);
