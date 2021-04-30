@@ -43,15 +43,15 @@ namespace LoginApp
             // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(37, 47);
+            this.pictureBox.Location = new System.Drawing.Point(24, 47);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(292, 385);
+            this.pictureBox.Size = new System.Drawing.Size(308, 482);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
             // StatusText
             // 
-            this.StatusText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusText.Location = new System.Drawing.Point(349, 77);
             this.StatusText.Multiline = true;
             this.StatusText.Name = "StatusText";
@@ -62,6 +62,7 @@ namespace LoginApp
             // 
             // captureButton
             // 
+            this.captureButton.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.captureButton.Location = new System.Drawing.Point(349, 34);
             this.captureButton.Name = "captureButton";
             this.captureButton.Size = new System.Drawing.Size(80, 36);
@@ -73,6 +74,7 @@ namespace LoginApp
             // saveButton
             // 
             this.saveButton.Enabled = false;
+            this.saveButton.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveButton.Location = new System.Drawing.Point(449, 34);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(81, 36);
@@ -84,15 +86,17 @@ namespace LoginApp
             // FeatureRequiredText
             // 
             this.FeatureRequiredText.AutoSize = true;
+            this.FeatureRequiredText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FeatureRequiredText.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.FeatureRequiredText.Location = new System.Drawing.Point(855, 57);
             this.FeatureRequiredText.Name = "FeatureRequiredText";
-            this.FeatureRequiredText.Size = new System.Drawing.Size(133, 17);
+            this.FeatureRequiredText.Size = new System.Drawing.Size(135, 18);
             this.FeatureRequiredText.TabIndex = 7;
             this.FeatureRequiredText.Text = "Features required : ";
             // 
             // Back_Button
             // 
+            this.Back_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Back_Button.Location = new System.Drawing.Point(965, 488);
             this.Back_Button.Name = "Back_Button";
             this.Back_Button.Size = new System.Drawing.Size(99, 41);
@@ -103,6 +107,7 @@ namespace LoginApp
             // 
             // Upload_Button
             // 
+            this.Upload_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Upload_Button.Location = new System.Drawing.Point(551, 34);
             this.Upload_Button.Name = "Upload_Button";
             this.Upload_Button.Size = new System.Drawing.Size(153, 36);
@@ -114,9 +119,10 @@ namespace LoginApp
             // ID_Label
             // 
             this.ID_Label.AutoSize = true;
+            this.ID_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ID_Label.Location = new System.Drawing.Point(349, 444);
             this.ID_Label.Name = "ID_Label";
-            this.ID_Label.Size = new System.Drawing.Size(21, 17);
+            this.ID_Label.Size = new System.Drawing.Size(26, 20);
             this.ID_Label.TabIndex = 10;
             this.ID_Label.Text = "ID";
             // 
@@ -132,6 +138,7 @@ namespace LoginApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(1081, 551);
             this.Controls.Add(this.ID_Textbox);
             this.Controls.Add(this.ID_Label);

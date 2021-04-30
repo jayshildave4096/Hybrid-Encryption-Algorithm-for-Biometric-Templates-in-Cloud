@@ -43,9 +43,10 @@ namespace LoginApp
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(261, 15);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(174, 36);
+            this.button1.Size = new System.Drawing.Size(200, 36);
             this.button1.TabIndex = 0;
             this.button1.Text = "Load From DataBase";
             this.button1.UseVisualStyleBackColor = true;
@@ -54,9 +55,10 @@ namespace LoginApp
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(13, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(26, 17);
+            this.label1.Size = new System.Drawing.Size(28, 18);
             this.label1.TabIndex = 1;
             this.label1.Text = "ID*";
             // 
@@ -64,7 +66,7 @@ namespace LoginApp
             // 
             this.textBox1.Location = new System.Drawing.Point(45, 15);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(109, 22);
+            this.textBox1.Size = new System.Drawing.Size(128, 22);
             this.textBox1.TabIndex = 2;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -78,6 +80,7 @@ namespace LoginApp
             // 
             // Back_Button
             // 
+            this.Back_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Back_Button.Location = new System.Drawing.Point(662, 395);
             this.Back_Button.Name = "Back_Button";
             this.Back_Button.Size = new System.Drawing.Size(74, 37);
@@ -88,9 +91,10 @@ namespace LoginApp
             // 
             // FileLoadButton
             // 
-            this.FileLoadButton.Location = new System.Drawing.Point(441, 15);
+            this.FileLoadButton.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FileLoadButton.Location = new System.Drawing.Point(467, 15);
             this.FileLoadButton.Name = "FileLoadButton";
-            this.FileLoadButton.Size = new System.Drawing.Size(172, 36);
+            this.FileLoadButton.Size = new System.Drawing.Size(201, 36);
             this.FileLoadButton.TabIndex = 5;
             this.FileLoadButton.Text = "Load From Computer";
             this.FileLoadButton.UseVisualStyleBackColor = true;
@@ -98,6 +102,7 @@ namespace LoginApp
             // 
             // Capture_Button
             // 
+            this.Capture_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Capture_Button.Location = new System.Drawing.Point(261, 395);
             this.Capture_Button.Name = "Capture_Button";
             this.Capture_Button.Size = new System.Drawing.Size(115, 36);
@@ -117,9 +122,10 @@ namespace LoginApp
             // FARTextBox
             // 
             this.FARTextBox.AutoSize = true;
+            this.FARTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FARTextBox.Location = new System.Drawing.Point(389, 405);
             this.FARTextBox.Name = "FARTextBox";
-            this.FARTextBox.Size = new System.Drawing.Size(39, 17);
+            this.FARTextBox.Size = new System.Drawing.Size(47, 20);
             this.FARTextBox.TabIndex = 8;
             this.FARTextBox.Text = "FAR:";
             // 
@@ -127,6 +133,7 @@ namespace LoginApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.FARTextBox);
             this.Controls.Add(this.pictureBox);

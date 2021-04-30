@@ -42,6 +42,7 @@ namespace LoginApp
             // 
             // Encrypt_Button
             // 
+            this.Encrypt_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Encrypt_Button.Location = new System.Drawing.Point(489, 209);
             this.Encrypt_Button.Name = "Encrypt_Button";
             this.Encrypt_Button.Size = new System.Drawing.Size(94, 43);
@@ -53,10 +54,10 @@ namespace LoginApp
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(490, 134);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 18);
+            this.label1.Size = new System.Drawing.Size(101, 22);
             this.label1.TabIndex = 2;
             this.label1.Text = "Private Key";
             // 
@@ -77,9 +78,9 @@ namespace LoginApp
             // 
             // LoadButton
             // 
-            this.LoadButton.Location = new System.Drawing.Point(45, 513);
+            this.LoadButton.Location = new System.Drawing.Point(12, 513);
             this.LoadButton.Name = "LoadButton";
-            this.LoadButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadButton.Size = new System.Drawing.Size(93, 40);
             this.LoadButton.TabIndex = 5;
             this.LoadButton.Text = "Load";
             this.LoadButton.UseVisualStyleBackColor = true;
@@ -88,27 +89,29 @@ namespace LoginApp
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(687, 27);
+            this.textBox2.Location = new System.Drawing.Point(657, 12);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(457, 464);
+            this.textBox2.Size = new System.Drawing.Size(487, 464);
             this.textBox2.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(459, 276);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(427, 274);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 17);
+            this.label2.Size = new System.Drawing.Size(140, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "Encryption Time :";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(462, 309);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(428, 312);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 17);
+            this.label3.Size = new System.Drawing.Size(84, 20);
             this.label3.TabIndex = 8;
             this.label3.Text = "File Size :";
             // 
@@ -126,6 +129,7 @@ namespace LoginApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(1178, 577);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);

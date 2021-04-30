@@ -41,9 +41,11 @@ namespace LoginApp
             // 
             // Login_Button
             // 
-            this.Login_Button.Location = new System.Drawing.Point(185, 274);
+            this.Login_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Login_Button.ForeColor = System.Drawing.Color.Black;
+            this.Login_Button.Location = new System.Drawing.Point(187, 274);
             this.Login_Button.Name = "Login_Button";
-            this.Login_Button.Size = new System.Drawing.Size(120, 31);
+            this.Login_Button.Size = new System.Drawing.Size(121, 31);
             this.Login_Button.TabIndex = 0;
             this.Login_Button.Text = "Login";
             this.Login_Button.UseVisualStyleBackColor = true;
@@ -51,7 +53,8 @@ namespace LoginApp
             // 
             // Register_Button
             // 
-            this.Register_Button.Location = new System.Drawing.Point(350, 274);
+            this.Register_Button.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Register_Button.Location = new System.Drawing.Point(364, 274);
             this.Register_Button.Name = "Register_Button";
             this.Register_Button.Size = new System.Drawing.Size(116, 31);
             this.Register_Button.TabIndex = 1;
@@ -62,29 +65,30 @@ namespace LoginApp
             // Username
             // 
             this.Username.AutoSize = true;
-            this.Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Username.Font = new System.Drawing.Font("Book Antiqua", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Username.Location = new System.Drawing.Point(166, 125);
             this.Username.Name = "Username";
-            this.Username.Size = new System.Drawing.Size(102, 25);
+            this.Username.Size = new System.Drawing.Size(102, 24);
             this.Username.TabIndex = 2;
             this.Username.Text = "Username";
             // 
             // Password
             // 
             this.Password.AutoSize = true;
-            this.Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Password.Font = new System.Drawing.Font("Book Antiqua", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Password.Location = new System.Drawing.Point(166, 168);
             this.Password.Name = "Password";
-            this.Password.Size = new System.Drawing.Size(98, 25);
+            this.Password.Size = new System.Drawing.Size(96, 24);
             this.Password.TabIndex = 3;
             this.Password.Text = "Password";
             // 
             // AWS_Button
             // 
             this.AWS_Button.AutoSize = true;
+            this.AWS_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AWS_Button.Location = new System.Drawing.Point(245, 224);
             this.AWS_Button.Name = "AWS_Button";
-            this.AWS_Button.Size = new System.Drawing.Size(60, 21);
+            this.AWS_Button.Size = new System.Drawing.Size(63, 22);
             this.AWS_Button.TabIndex = 4;
             this.AWS_Button.TabStop = true;
             this.AWS_Button.Text = "AWS";
@@ -93,9 +97,10 @@ namespace LoginApp
             // GCP_Button
             // 
             this.GCP_Button.AutoSize = true;
+            this.GCP_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GCP_Button.Location = new System.Drawing.Point(350, 224);
             this.GCP_Button.Name = "GCP_Button";
-            this.GCP_Button.Size = new System.Drawing.Size(58, 21);
+            this.GCP_Button.Size = new System.Drawing.Size(62, 22);
             this.GCP_Button.TabIndex = 5;
             this.GCP_Button.TabStop = true;
             this.GCP_Button.Text = "GCP";
@@ -103,6 +108,8 @@ namespace LoginApp
             // 
             // Username_TxtBox
             // 
+            this.Username_TxtBox.BackColor = System.Drawing.SystemColors.Info;
+            this.Username_TxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Username_TxtBox.Location = new System.Drawing.Point(279, 128);
             this.Username_TxtBox.Name = "Username_TxtBox";
             this.Username_TxtBox.Size = new System.Drawing.Size(201, 22);
@@ -110,6 +117,7 @@ namespace LoginApp
             // 
             // Password_TxtBox
             // 
+            this.Password_TxtBox.BackColor = System.Drawing.SystemColors.Info;
             this.Password_TxtBox.Location = new System.Drawing.Point(279, 171);
             this.Password_TxtBox.Name = "Password_TxtBox";
             this.Password_TxtBox.Size = new System.Drawing.Size(201, 22);
@@ -119,7 +127,8 @@ namespace LoginApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 450);
+            this.BackColor = System.Drawing.Color.Khaki;
+            this.ClientSize = new System.Drawing.Size(669, 393);
             this.Controls.Add(this.Password_TxtBox);
             this.Controls.Add(this.Username_TxtBox);
             this.Controls.Add(this.GCP_Button);
@@ -128,6 +137,8 @@ namespace LoginApp
             this.Controls.Add(this.Username);
             this.Controls.Add(this.Register_Button);
             this.Controls.Add(this.Login_Button);
+            this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "LoginApp";
             this.Text = "LoginApp";
             this.ResumeLayout(false);
